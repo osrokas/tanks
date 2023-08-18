@@ -74,6 +74,7 @@ class Screen(object):
         )
 
         collision = None
+        bullets = []
         # Running game loop
         while True:
             player.shotting = False
@@ -86,7 +87,8 @@ class Screen(object):
             self.gui.update()
 
             try:
-                self.canvas.delete(shot)
+                for shot in shots:
+                    self.canvas.delete(shot)
             except UnboundLocalError:
                 pass
 
@@ -97,16 +99,22 @@ class Screen(object):
                     canvas=self.canvas,
                     direction=player.angle,
                 )
+
+                bullets.append(bullet)
+
             try:
                 if collision == "Collision":
                     del bullet
                     collision = None
                 elif collision == None:
-                    shot = bullet.create_bullet(add_value=6)
-                    colision_return = colision_detector.collision(
-                        self.canvas, shot, wall
-                    )
-                    collision = colision_return
+                    shots = []
+                    for bullet in bullets:
+                        shot = bullet.create_bullet(add_value=6)
+                        colision_return = colision_detector.collision(
+                            self.canvas, shot, wall
+                        )
+                        collision = colision_return
+                        shots.append(shot)
             except UnboundLocalError:
                 pass
 
