@@ -84,39 +84,34 @@ class Screen(object):
             e2 = enemy2.create_player()
             player1 = player.create_player()
 
+            player._return_value(gui=self.gui)
+
             self.gui.update()
+            # try:
+            #     for shot in shots:
+            #         self.canvas.delete(shot)
+            # except UnboundLocalError:
+            #     pass
 
-            try:
-                for shot in shots:
-                    self.canvas.delete(shot)
-            except UnboundLocalError:
-                pass
+            # # if player.shotting == True:
+            # #     bullets.append(bullet)
 
-            if player.shotting == True:
-                bullet = Bullet(
-                    inital_x=player.x_coord,
-                    inital_y=player.y_coord,
-                    canvas=self.canvas,
-                    direction=player.angle,
-                )
+            # try:
+            #     if collision == "Collision":
+            #         del bullet
+            #         collision = None
+            #     elif collision == None:
+            #         shots = []
+            #         for bullet in bullets:
+            #             shot = bullet.create_bullet(add_value=6)
+            #             colision_return = colision_detector.collision(
+            #                 self.canvas, shot, wall
+            #             )
+            #             collision = colision_return
+            #             shots.append(shot)
 
-                bullets.append(bullet)
-
-            try:
-                if collision == "Collision":
-                    del bullet
-                    collision = None
-                elif collision == None:
-                    shots = []
-                    for bullet in bullets:
-                        shot = bullet.create_bullet(add_value=6)
-                        colision_return = colision_detector.collision(
-                            self.canvas, shot, wall
-                        )
-                        collision = colision_return
-                        shots.append(shot)
-            except UnboundLocalError:
-                pass
+            # except UnboundLocalError:
+            #     pass
 
             self.canvas.delete(e1)
             self.canvas.delete(e2)

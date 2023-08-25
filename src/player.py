@@ -1,5 +1,6 @@
 from tkinter import *
 from renderer import CharRenderer
+from ammo import Bullet
 
 
 class Player(object):
@@ -82,8 +83,32 @@ class Player(object):
 
             self.angle = 270
 
-        if self.key == "e":
-            self.shotting = True
+        # if self.key == "e":
+        #     self.shotting = True
+
+        #     bullet = Bullet(
+        #         inital_x=self.x_coord,
+        #         inital_y=self.y_coord,
+        #         canvas=self.canvas,
+        #         direction=self.angle,
+        #     )
 
     def return_value(self, gui: Tk):
         gui.bind(f"<Key>", self._keyboard_input_events, add=False)
+
+    def sskeyboard_input_events(self, event):
+        self.key = event.__dict__["char"]
+        if self.key == "e":
+            self.shotting = True
+
+            bullet = Bullet(
+                inital_x=self.x_coord,
+                inital_y=self.y_coord,
+                canvas=self.canvas,
+                direction=self.angle,
+            )
+
+    def _return_value(self, gui: Tk):
+        gui.bind(f"<KeyRelease>", self.sskeyboard_input_events, add=False)
+        if self.shotting == True:
+            print("labas")
