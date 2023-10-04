@@ -1,12 +1,14 @@
 from tkinter import *
-from player import Player
-from enemy import Enemy
+
+# from player import Player
+from game_objects import Enemy, Player, Bullet
 import time
-from walls import Wall
+from src.structures import Wall
 from collisions import Collision
 from PIL import Image, ImageTk
 from renderer import CharRenderer
-from ammo import Bullet
+
+# from ammo import Bullet
 
 
 class Screen(object):
@@ -63,14 +65,14 @@ class Screen(object):
         )
 
         player = Player(
-            x_center=60,
-            y_center=60,
-            x_max=int(self.game_box_width),
-            y_max=int(self.game_box_height),
+            x=60,
+            y=60,
+            max_x=int(self.game_box_width),
+            max_y=int(self.game_box_height),
             player_height=40,
             player_width=40,
             canvas=self.canvas,
-            img_path=r"C:\dev\python_game\asssets\images.jpg",
+            img_path=r"C:\dev\python_game\asssets\tank.jpg",
         )
 
         collision = None
@@ -79,9 +81,9 @@ class Screen(object):
             player.shotting = False
             wall = wall1.create_wall()
             player.return_value(gui=self.gui)
-            e1 = enemy1.create_player()
-            e2 = enemy2.create_player()
-            player1 = player.create_player()
+            e1 = enemy1.create_object()
+            e2 = enemy2.create_object()
+            player1 = player.create_object()
 
             self.gui.update()
 
@@ -92,17 +94,20 @@ class Screen(object):
 
             if player.shotting == True:
                 bullet = Bullet(
-                    inital_x=player.x_coord,
-                    inital_y=player.y_coord,
+                    x=player.x,
+                    y=player.y,
                     canvas=self.canvas,
                     direction=player.angle,
+                    max_x=self.game_box_width,
+                    max_y=self.game_box_height,
                 )
+                
             try:
                 if collision == "Collision":
                     del bullet
                     collision = None
                 elif collision == None:
-                    shot = bullet.create_bullet(add_value=6)
+                    shot = bullet.create_object(add_value=6)
                     colision_return = colision_detector.collision(
                         self.canvas, shot, wall
                     )

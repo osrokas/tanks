@@ -1,4 +1,4 @@
-from tkinter import Canvas
+from tkinter import *
 
 
 class Bullet(object):
@@ -10,16 +10,7 @@ class Bullet(object):
         self.canvas = canvas
         self.direction = direction
 
-    def create_bullet(self, add_value: int):
-        if self.direction == 0:
-            self.inital_y = self.inital_y - add_value
-        elif self.direction == 90:
-            self.inital_x = self.inital_x - add_value
-        elif self.direction == 180:
-            self.inital_y = self.inital_y + add_value
-        elif self.direction == 270:
-            self.inital_x = self.inital_x + add_value
-        bullet = self.canvas.create_rectangle(
+        self.canvas.create_rectangle(
             self.inital_x,
             self.inital_y,
             self.inital_x + 10,
@@ -27,5 +18,12 @@ class Bullet(object):
             outline="red",
             fill="yellow",
         )
-        self.bullet = bullet
-        return bullet
+
+
+class Bullets(object):
+    def __init__(self, bullets: list[Bullet]) -> None:
+        self.bullets = bullets
+
+    def move_bullets(self):
+        for bullet in self.bullets:
+            bullet.create_object(add_value=6)
