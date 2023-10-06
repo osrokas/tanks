@@ -3,7 +3,7 @@ from structures import Wall
 
 # from ammo import Bullet
 from typing import Union
-from game_objects import Player, Enemy, Bullet
+from game_objects import Player, Enemy, Bullet, GameObject
 
 
 class Collision(object):
@@ -53,3 +53,71 @@ class Collision(object):
         ):
             player.heatlh = player.heatlh - 8
             bullet.hit = True
+
+    @staticmethod
+    def player_collisions_down(player: Player, collision_obj: GameObject):
+        if collision_obj.left_x < player.x < collision_obj.right_x and (
+            collision_obj.down_y == player.up_y
+            or collision_obj.down_y == player.up_y + 1
+            or collision_obj.down_y == player.up_y + 2
+            or collision_obj.down_y == player.up_y + 3
+            or collision_obj.down_y == player.up_y + 4
+        ):
+            colision = "up"
+            return colision
+
+    @staticmethod
+    def player_collisions_up(player: Player, collision_obj: GameObject):
+        if collision_obj.left_x < player.x < collision_obj.right_x and (
+            collision_obj.top_y == player.down_y
+            or collision_obj.top_y == player.down_y - 1
+            or collision_obj.top_y == player.down_y - 2
+            or collision_obj.top_y == player.down_y - 3
+            or collision_obj.top_y == player.down_y - 4
+        ):
+            colision = "down"
+            return colision
+
+    @staticmethod
+    def player_collisions_left(player: Player, collision_obj: GameObject):
+        if collision_obj.top_y < player.y < collision_obj.down_y and (
+            collision_obj.right_x == player.left_x
+            or collision_obj.right_x == player.left_x - 1
+            or collision_obj.right_x == player.left_x - 2
+            or collision_obj.right_x == player.left_x - 3
+            or collision_obj.right_x == player.left_x - 4
+        ):
+            colision = "left"
+            return colision
+
+    @staticmethod
+    def player_collisions_right(player: Player, collision_obj: GameObject):
+        if collision_obj.top_y < player.y < collision_obj.down_y and (
+            collision_obj.left_x == player.right_x
+            or collision_obj.left_x == player.right_x + 1
+            or collision_obj.left_x == player.right_x + 2
+            or collision_obj.left_x == player.right_x + 3
+            or collision_obj.left_x == player.right_x + 4
+        ):
+            colision = "right"
+            return colision
+
+    @staticmethod
+    def check_collsion(collsions, player: Player):
+        if "down" in collsions:
+            player.speed_s = 0
+        else:
+            player.speed_s = 4
+        if "up" in collsions:
+            player.speed_w = 0
+        else:
+            player.speed_w = 4
+        if "left" in collsions:
+            player.speed_a = 0
+        else:
+            player.speed_a = 4
+
+        if "right" in collsions:
+            player.speed_d = 0
+        else:
+            player.speed_d = 4

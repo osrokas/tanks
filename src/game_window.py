@@ -1,5 +1,7 @@
 from tkinter import *
 from game_objects import Enemy
+from PIL import ImageTk, Image
+from renderer import CharRenderer
 
 
 class GameWindow(object):
@@ -17,7 +19,6 @@ class GameWindow(object):
 
         self.game_box_width = game_box_width
         self.game_box_height = game_box_height
-
         self.gui = Tk()
         self.gui.configure(background=background_color)
         self.gui.title(game_name)
@@ -27,9 +28,14 @@ class GameWindow(object):
         self.padx = 20
         self.pady = 20
         self.canvas = Canvas(
-            self.gui, bg="black", width=self.game_box_width, height=self.game_box_height
+            self.gui, width=self.game_box_width, height=self.game_box_height
         )
+
+        # self.img = self.render.load_image(1000, 1000)
+
         self.canvas.pack(padx=self.padx, pady=self.pady)
+        # self.canvas.create_image(50, 10, image=self.background_img, anchor=NW)
+
         canvas = self.canvas
 
         return canvas
