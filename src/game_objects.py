@@ -31,7 +31,15 @@ class Bullet(GameObject):
     """
 
     def __init__(
-        self, canvas: Canvas, x: int, y: int, game_box, direction: int
+        self,
+        canvas: Canvas,
+        x: int,
+        y: int,
+        game_box,
+        direction: int,
+        img_path: str,
+        bullet_width: int,
+        bullet_height: int,
     ) -> None:
         """
         :param canvas: gameplay window
@@ -43,6 +51,14 @@ class Bullet(GameObject):
         super().__init__(canvas, x, y, game_box)
         self.direction = direction
         self.hit = False
+        self.bullet_width = bullet_width
+        self.bullet_height = bullet_height
+        self.render = CharRenderer(
+            canvas=self.canvas,
+            img_path=img_path,
+            width=bullet_width,
+            height=bullet_height,
+        )
 
 
 class MovingBullet(object):
@@ -69,12 +85,13 @@ class MovingBullet(object):
             elif bullet_obj.direction == 270:
                 bullet_obj.x = bullet_obj.x + add_value
             bullet = bullet_obj.canvas.create_rectangle(
-                bullet_obj.x,
-                bullet_obj.y,
-                bullet_obj.x + 10,
-                bullet_obj.y + 10,
-                outline="red",
-                fill="yellow",
+                bullet_obj.x - bullet_obj.bullet_width / 2,
+                bullet_obj.y - bullet_obj.bullet_height / 2,
+                bullet_obj.x + bullet_obj.bullet_width / 2,
+                bullet_obj.y + bullet_obj.bullet_height / 2,
+            )
+            bullet_obj.render.load_image(
+                bullet_obj.x, bullet_obj.y, rotation=bullet_obj.direction
             )
             bullets_obj.append(bullet)
 
@@ -84,7 +101,7 @@ class MovingBullet(object):
             return bullets_obj
 
     @staticmethod
-    def delete_object(bullets: list[list], canvas: Canvas):
+    def delete_object(bullets: list[list], canvas: Canvas, window):
         """
         The method deletes list of objects on gameplay window
 
@@ -97,6 +114,8 @@ class MovingBullet(object):
             else:
                 for _b in bullet:
                     canvas.delete(_b)
+
+        window.gui.update()
 
 
 class Enemy(GameObject):
@@ -247,6 +266,7 @@ class Player(GameObject):
         player_height: int,
         img_path: str,
         heatlh: int,
+        speed: int = 4,
     ) -> None:
         super().__init__(canvas, x, y, game_box)
         self.angle = 0
@@ -263,6 +283,11 @@ class Player(GameObject):
             width=player_width,
             height=player_height,
         )
+        self.speed = speed
+        self.speed_w = speed
+        self.speed_s = speed
+        self.speed_d = speed
+        self.speed_a = speed
 
     def create_object(self):
         player = self.canvas.create_rectangle(
@@ -281,7 +306,7 @@ class Player(GameObject):
         self.key = event.__dict__["char"]
         if self.key == "w":
             if self.y > 0:
-                self.y = self.y - 4
+                self.y = self.y - self.speed_w
             else:
                 self.y = self.y
 
@@ -289,7 +314,7 @@ class Player(GameObject):
 
         if self.key == "s":
             if self.y < self.max_y:
-                self.y = self.y + 4
+                self.y = self.y + self.speed_s
             else:
                 self.y = self.max_y
 
@@ -297,7 +322,7 @@ class Player(GameObject):
 
         if self.key == "a":
             if self.x > 0:
-                self.x = self.x - 4
+                self.x = self.x - self.speed_a
             else:
                 self.x = self.x
 
@@ -305,7 +330,7 @@ class Player(GameObject):
 
         if self.key == "d":
             if self.x < self.max_x:
-                self.x = self.x + 4
+                self.x = self.x + self.speed_d
             else:
                 self.x = self.max_x
 

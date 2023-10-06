@@ -5,6 +5,15 @@ from collisions import Collision
 from handlers import DeleteOutOfBound
 from bullets_bar import BulletsBar
 from gameplay import wall_generator, create_enemies
+from PIL import ImageTk, Image as ii
+from tkinter import *
+
+# import multiprocessing
+
+CPU_COUNT = 4
+
+# pool = multiprocessing.Pool(CPU_COUNT)
+background_img = r"C:\dev\python_game\asssets\background.png"
 
 # Create game window
 window = GameWindow(
@@ -14,11 +23,12 @@ window = GameWindow(
     game_box_width=1000,
     game_box_height=600,
 )
-
+python_image = ii.open(background_img)
+python_image = python_image.resize((2400, 1200), resample=ii.Resampling.NEAREST)
+ph = ImageTk.PhotoImage(python_image)
 # Create gameplay window
 canvas = window.create_game_window()
 bullet_canvas = window.bullets_window()
-
 
 walls = wall_generator(canvas)
 enemies = create_enemies(canvas=canvas, window=window)
@@ -35,7 +45,7 @@ player = Player(
     player_width=40,
     canvas=canvas,
     game_box=window,
-    img_path=r"C:\dev\python_game\asssets\tank.png",
+    img_path=r"C:\dev\\python_game\\asssets\\tank.png",
     heatlh=100,
 )
 # Initialize collisions
@@ -53,7 +63,20 @@ max_enemy_bullets_len = 10
 # Set collision value to false
 collision = None
 
+
+initial_time = []
 while True:
+    canvas.create_image((0, 0), image=ph)
+    canvas.pack(fill=BOTH)
+    initial_time.append(time.time())
+    try:
+        _time = initial_time[-1] - initial_time[0]
+        if _time >= 3:
+            initial_time = []
+        else:
+            pass
+    except:
+        pass
     # Create game objects
     _walls = []
     for _w in walls:
@@ -89,6 +112,9 @@ while True:
                 canvas=canvas,
                 direction=en.angle,
                 game_box=window,
+                bullet_width=20,
+                bullet_height=30,
+                img_path=r"C:\dev\python_game\asssets\bullet.png",
             )
             enemy_bullets.append(en_bullet)
 
@@ -108,12 +134,24 @@ while True:
             # print(col)
             try:
                 # Iterate through list and delete last iteration rectangles
-                MovingBullet.delete_object(enemy_bullets_canvas[0:-1], canvas=canvas)
+                MovingBullet.delete_object(
+                    enemy_bullets_canvas[0:-1], canvas=canvas, window=window
+                )
             except Exception as e:
                 pass
         except Exception as e:
             print(e)
-
+    collisions = []
+    for _ww in walls:
+        coll_down = colision_detector.player_collisions_down(player, _ww)
+        coll_left = colision_detector.player_collisions_left(player, _ww)
+        coll_right = colision_detector.player_collisions_right(player, _ww)
+        coll_up = colision_detector.player_collisions_up(player, _ww)
+        collisions.append(coll_down)
+        collisions.append(coll_up)
+        collisions.append(coll_left)
+        collisions.append(coll_right)
+    colision_detector.check_collsion(collsions=collisions, player=player)
     # When keyboard pressed 'e' set shoting to True
     # and bullet object created
     if player.shotting == True and len(bullets) < max_bullets_len:
@@ -123,6 +161,9 @@ while True:
             canvas=canvas,
             direction=player.angle,
             game_box=window,
+            bullet_width=20,
+            bullet_height=30,
+            img_path=r"C:\dev\python_game\asssets\bullet.png",
         )
         # Append bullet object to bullets list
         bullets.append(bullet)
@@ -132,10 +173,13 @@ while True:
         bullets_canvas.append(_bullets)
 
         Collision.destroy_wall(bullets=bullets, walls=walls)
+        window.gui.update()
         # print(col)
         try:
             # Iterate through list and delete last iteration rectangles
-            MovingBullet.delete_object(bullets_canvas[0:-1], canvas=canvas)
+            MovingBullet.delete_object(
+                bullets_canvas[0:-1], canvas=canvas, window=window
+            )
         except Exception as e:
             pass
         # colision_return = colision_detector.collision(canvas, shot, wall)
@@ -153,13 +197,18 @@ while True:
 
     if len(_walls) > 0:
         canvas.delete(_walls.pop())
+    window.gui.update()
     canvas.delete(player_object)
     window.gui.update()
 
+    # pool.map(canvas.delete, canvas_en)
+    # pool.close()
+    # pool.join()
     for _en in canvas_en:
         canvas.delete(_en)
     DeleteOutOfBound.delete_object(game_window=window, game_objects=bullets)
     DeleteOutOfBound.delete_object(game_window=window, game_objects=enemy_bullets)
+
     # Set fps
     fps_value = 1 / 120
     time.sleep(fps_value)
