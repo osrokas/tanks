@@ -60,6 +60,17 @@ class Bullet(GameObject):
             height=bullet_height,
         )
 
+    def move(self):
+        if self.direction == 0:
+            self.y = self.y - 5
+        elif self.direction == 90:
+            self.x = self.x - 5
+        elif self.direction == 180:
+            self.y = self.y + 5
+        elif self.direction == 270:
+            self.x = self.x + 5
+        self.render.load_image(self.x, self.y, rotation=self.direction)
+
 
 class MovingBullet(object):
     """

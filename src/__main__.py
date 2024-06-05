@@ -98,9 +98,11 @@ while True:
     # Update game window after iteration
     canvas_en = []
     window.gui.update()
+
     for en in enemies:
         if en.heatlh < 0:
             enemies.remove(en)
+
     for en in enemies:
         canvas_en.append(en.create_object())
         _en_fire_state = en.fire_state()
@@ -125,42 +127,44 @@ while True:
             )
             enemy_bullets.append(en_bullet)
 
-        try:
-            # pass
-            # if collision == "Collision":
-            #     del bullet
-            #     collision = None
-            # elif collision == None:
-            # Iterate through bullets list and create bullet rectangle
-            # in game window with incremnt value of coordinates with add_value parameter
-            _en_bullets = MovingBullet.create_object(enemy_bullets, 6)
-            # Append bullets rectangles to list
-            enemy_bullets_canvas.append(_en_bullets)
+    for en_bul in enemy_bullets:
+        en_bul.move()
+        # try:
+        # pass
+        # if collision == "Collision":
+        #     del bullet
+        #     collision = None
+        # elif collision == None:
+    #         # Iterate through bullets list and create bullet rectangle
+    #         # in game window with incremnt value of coordinates with add_value parameter
+    #         _en_bullets = MovingBullet.create_object(enemy_bullets, 6)
+    #         # Append bullets rectangles to list
+    #         enemy_bullets_canvas.append(_en_bullets)
 
-            Collision.destroy_wall(bullets=enemy_bullets, walls=walls)
-            # print(col)
-            try:
-                # Iterate through list and delete last iteration rectangles
-                MovingBullet.delete_object(
-                    enemy_bullets_canvas[0:-1], canvas=canvas, window=window
-                )
-            except Exception as e:
-                pass
-        except Exception as e:
-            print(e)
-    collisions = []
-    for _ww in walls:
-        coll_down = colision_detector.player_collisions_down(player, _ww)
-        coll_left = colision_detector.player_collisions_left(player, _ww)
-        coll_right = colision_detector.player_collisions_right(player, _ww)
-        coll_up = colision_detector.player_collisions_up(player, _ww)
-        collisions.append(coll_down)
-        collisions.append(coll_up)
-        collisions.append(coll_left)
-        collisions.append(coll_right)
-    colision_detector.check_collsion(collsions=collisions, player=player)
-    # When keyboard pressed 'e' set shoting to True
-    # and bullet object created
+    #         Collision.destroy_wall(bullets=enemy_bullets, walls=walls)
+    #         # print(col)
+    #         try:
+    #             # Iterate through list and delete last iteration rectangles
+    #             MovingBullet.delete_object(
+    #                 enemy_bullets_canvas[0:-1], canvas=canvas, window=window
+    #             )
+    #         except Exception as e:
+    #             pass
+    #     except Exception as e:
+    #         print(e)
+    # collisions = []
+    # for _ww in walls:
+    #     coll_down = colision_detector.player_collisions_down(player, _ww)
+    #     coll_left = colision_detector.player_collisions_left(player, _ww)
+    #     coll_right = colision_detector.player_collisions_right(player, _ww)
+    #     coll_up = colision_detector.player_collisions_up(player, _ww)
+    #     collisions.append(coll_down)
+    #     collisions.append(coll_up)
+    #     collisions.append(coll_left)
+    #     collisions.append(coll_right)
+    # colision_detector.check_collsion(collsions=collisions, player=player)
+    # # When keyboard pressed 'e' set shoting to True
+    # # and bullet object created
     if player.shotting == True and len(bullets) < max_bullets_len:
         bullet = Bullet(
             x=player.x,
@@ -172,49 +176,54 @@ while True:
             bullet_height=30,
             img_path=bullets_img,
         )
-        # Append bullet object to bullets list
+        # # Append bullet object to bullets list
         bullets.append(bullet)
-    try:
-        _bullets = MovingBullet.create_object(bullets, 6)
-        # Append bullets rectangles to list
-        bullets_canvas.append(_bullets)
 
-        Collision.destroy_wall(bullets=bullets, walls=walls)
-        window.gui.update()
-        # print(col)
-        try:
-            # Iterate through list and delete last iteration rectangles
-            MovingBullet.delete_object(
-                bullets_canvas[0:-1], canvas=canvas, window=window
-            )
-        except Exception as e:
-            pass
-        # colision_return = colision_detector.collision(canvas, shot, wall)
-        # collision = colision_return
-    except Exception as e:
-        print(e)
-    bullets_count = BulletsBar(bullets=bullets, max_bullets=max_bullets_len)
-    bullets_text = f"Shots : {bullets_count.available_bullets}"
-    window.bullet_text_update(txt=str(bullets_text))
-    # i = 0
-    # for _h in health_canvas_list:
-    #     window.health_bar_text_update(txt=str(i))
-    # # for __en in enemies:
-    # GameWindow.health_bar_text_update(canvas=_h, gui=window.gui, enemies=enemies)
+    for bul in bullets:
+        bul.move()
 
-    if len(_walls) > 0:
-        canvas.delete(_walls.pop())
     window.gui.update()
-    canvas.delete(player_object)
-    window.gui.update()
+    # try:
+    #     _bullets = MovingBullet.create_object(bullets, 6)
+    #     # Append bullets rectangles to list
+    #     bullets_canvas.append(_bullets)
 
-    # pool.map(canvas.delete, canvas_en)
-    # pool.close()
-    # pool.join()
-    for _en in canvas_en:
-        canvas.delete(_en)
-    DeleteOutOfBound.delete_object(game_window=window, game_objects=bullets)
-    DeleteOutOfBound.delete_object(game_window=window, game_objects=enemy_bullets)
+    #     Collision.destroy_wall(bullets=bullets, walls=walls)
+    #     window.gui.update()
+    #     # print(col)
+    #     try:
+    #         # Iterate through list and delete last iteration rectangles
+    #         MovingBullet.delete_object(
+    #             bullets_canvas[0:-1], canvas=canvas, window=window
+    #         )
+    #     except Exception as e:
+    #         pass
+    #     # colision_return = colision_detector.collision(canvas, shot, wall)
+    #     # collision = colision_return
+    # except Exception as e:
+    #     print(e)
+    # bullets_count = BulletsBar(bullets=bullets, max_bullets=max_bullets_len)
+    # bullets_text = f"Shots : {bullets_count.available_bullets}"
+    # window.bullet_text_update(txt=str(bullets_text))
+    # # i = 0
+    # # for _h in health_canvas_list:
+    # #     window.health_bar_text_update(txt=str(i))
+    # # # for __en in enemies:
+    # # GameWindow.health_bar_text_update(canvas=_h, gui=window.gui, enemies=enemies)
+
+    # if len(_walls) > 0:
+    #     canvas.delete(_walls.pop())
+    # window.gui.update()
+    # canvas.delete(player_object)
+    # window.gui.update()
+
+    # # pool.map(canvas.delete, canvas_en)
+    # # pool.close()
+    # # pool.join()
+    # for _en in canvas_en:
+    #     canvas.delete(_en)
+    # DeleteOutOfBound.delete_object(game_window=window, game_objects=bullets)
+    # DeleteOutOfBound.delete_object(game_window=window, game_objects=enemy_bullets)
 
     # Set fps
     fps_value = 1 / 120
