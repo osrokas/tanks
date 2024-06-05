@@ -12,8 +12,14 @@ from tkinter import *
 
 CPU_COUNT = 4
 
+import os
+
+current_path = os.getcwd()
+background_img = os.path.join(current_path, "asssets", "background.png")
+player_img = os.path.join(current_path, "asssets", "tank.png")
+enemy_img = os.path.join(current_path, "asssets", "enemy.png")
+bullets_img = os.path.join(current_path, "asssets", "bullet.png")
 # pool = multiprocessing.Pool(CPU_COUNT)
-background_img = r"C:\dev\python_game\asssets\background.png"
 
 # Create game window
 window = GameWindow(
@@ -38,6 +44,7 @@ for ene in enemies:
     health_canvas = window.health_bar()
     health_canvas_list.append(health_canvas)
 # Create player
+
 player = Player(
     x=60,
     y=60,
@@ -45,7 +52,7 @@ player = Player(
     player_width=40,
     canvas=canvas,
     game_box=window,
-    img_path=r"C:\dev\\python_game\\asssets\\tank.png",
+    img_path=player_img,
     heatlh=100,
 )
 # Initialize collisions
@@ -114,7 +121,7 @@ while True:
                 game_box=window,
                 bullet_width=20,
                 bullet_height=30,
-                img_path=r"C:\dev\python_game\asssets\bullet.png",
+                img_path=bullets_img,
             )
             enemy_bullets.append(en_bullet)
 
@@ -163,7 +170,7 @@ while True:
             game_box=window,
             bullet_width=20,
             bullet_height=30,
-            img_path=r"C:\dev\python_game\asssets\bullet.png",
+            img_path=bullets_img,
         )
         # Append bullet object to bullets list
         bullets.append(bullet)

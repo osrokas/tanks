@@ -1,5 +1,12 @@
+import os
+import walls
 from structures import Wall
 from game_objects import Enemy
+
+
+current_path = os.getcwd()
+walls_img = os.path.join(current_path, "asssets", "walls.png")
+enemy_img = os.path.join(current_path, "asssets", "enemy_tank.png")
 
 
 def wall_generator(canvas):
@@ -10,7 +17,7 @@ def wall_generator(canvas):
             y=200,
             width=160,
             height=20,
-            img_path=r"C:\dev\python_game\asssets\walls.png",
+            img_path=walls_img,
         ),
         Wall(
             canvas,
@@ -18,7 +25,7 @@ def wall_generator(canvas):
             y=10,
             width=160,
             height=20,
-            img_path=r"C:\dev\python_game\asssets\walls.png",
+            img_path=walls_img,
         ),
         Wall(
             canvas,
@@ -26,7 +33,7 @@ def wall_generator(canvas):
             y=40,
             width=160,
             height=20,
-            img_path=r"C:\dev\python_game\asssets\walls.png",
+            img_path=walls_img,
         ),
         Wall(
             canvas,
@@ -34,7 +41,7 @@ def wall_generator(canvas):
             y=200,
             width=160,
             height=20,
-            img_path=r"C:\dev\python_game\asssets\walls.png",
+            img_path=walls_img,
         ),
         Wall(
             canvas,
@@ -42,7 +49,7 @@ def wall_generator(canvas):
             y=100,
             width=20,
             height=160,
-            img_path=r"C:\dev\python_game\asssets\walls.png",
+            img_path=walls_img,
         ),
         Wall(
             canvas,
@@ -50,7 +57,7 @@ def wall_generator(canvas):
             y=-9999,
             width=20,
             height=160,
-            img_path=r"C:\dev\python_game\asssets\walls.png",
+            img_path=walls_img,
         ),
     ]
 
@@ -66,7 +73,7 @@ def create_enemies(canvas, window):
         game_box=window,
         player_height=40,
         player_width=40,
-        img_path=r"C:\dev\python_game\asssets\enemy_tank.png",
+        img_path=enemy_img,
         heatlh=100,
     )
     enemy2 = Enemy(
@@ -76,7 +83,7 @@ def create_enemies(canvas, window):
         game_box=window,
         player_height=40,
         player_width=40,
-        img_path=r"C:\dev\python_game\asssets\enemy_tank.png",
+        img_path=enemy_img,
         heatlh=100,
     )
     enemy2 = Enemy(
@@ -86,7 +93,7 @@ def create_enemies(canvas, window):
         game_box=window,
         player_height=40,
         player_width=40,
-        img_path=r"C:\dev\python_game\asssets\enemy_tank.png",
+        img_path=enemy_img,
         heatlh=100,
     )
     enemy2 = Enemy(
@@ -96,7 +103,7 @@ def create_enemies(canvas, window):
         game_box=window,
         player_height=40,
         player_width=40,
-        img_path=r"C:\dev\python_game\asssets\enemy_tank.png",
+        img_path=enemy_img,
         heatlh=100,
     )
     enemy3 = Enemy(
@@ -106,7 +113,7 @@ def create_enemies(canvas, window):
         game_box=window,
         player_height=40,
         player_width=40,
-        img_path=r"C:\dev\python_game\asssets\enemy_tank.png",
+        img_path=enemy_img,
         heatlh=100,
     )
 
