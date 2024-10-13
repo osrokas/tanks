@@ -1,0 +1,1 @@
+g++ main.cpp KeyboardEvents.cpp window.h KeyboardEvents.h -g -pedantic -o tanks -lSDL2 -lSDL2_image
