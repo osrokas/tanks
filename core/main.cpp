@@ -41,10 +41,11 @@ int main(){
   SDL_Rect texr;
   texr.x = screen_width / 2;
   texr.y = screen_height / 2;
-  texr.w = w / 4;
-  texr.h = h / 4;
+  texr.w = w / 6;
+  texr.h = h / 6;
+  double angle = 0;
 
-  // SDL loop
+      // SDL loop
   while (running) {
     // Check event inputs
     while (SDL_PollEvent(&event)) { // Pointing to memory address
@@ -53,20 +54,17 @@ int main(){
       }
       //   Get keyboard input
       else if (event.type == SDL_KEYDOWN) {
-        value = keyboardEvent(event, texr);
-        int *pointer = &texr.x;
-        *pointer = value;
-        std::cout << texr.x << std::endl;
+        keyboardMovement(event, &texr.x, &texr.y, &angle);
       }
     }
+
     // Clear screen
     SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, img, NULL, &texr);
+    SDL_RenderCopyEx(renderer, img, NULL, &texr, angle, NULL, SDL_FLIP_NONE);
     SDL_RenderPresent(renderer);
   }
   SDL_DestroyTexture(img);
   SDL_DestroyRenderer(renderer);
-//   SDL_DestroyWindow(window);
-
+  
   return 0;
 }
