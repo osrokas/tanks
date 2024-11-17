@@ -18,8 +18,6 @@ int main(){
   bool running = true; // Running state
   SDL_Event event;     // initialize sdl events
 
-  int w, h; // texture width & height
-  
   // Creating window
   window =
       SDL_CreateWindow("Tanks", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
@@ -28,9 +26,9 @@ int main(){
   // Create renderer
   renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-  Sprite tank(IMG_PATH, renderer, 200, 200);
-  
-      // SDL loop
+  Sprite tank(IMG_PATH, renderer, 50, 50);
+
+  // SDL loop
   while (running) {
     // Check event inputs
     while (SDL_PollEvent(&event)) { // Pointing to memory address
