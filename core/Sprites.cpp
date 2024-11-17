@@ -27,3 +27,4 @@ void Sprite::loadSprite(float angle, int x, int y) {
   SDL_RenderCopyEx(renderer, img, NULL, &texr, angle, NULL,
                                    SDL_FLIP_NONE);
 }
+

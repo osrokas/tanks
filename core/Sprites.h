@@ -21,4 +21,8 @@ public:
     SDL_Rect texr;
 };
 
+class Player : public Sprite {
+  std::string player_name;
+};
+
 #endif
