@@ -8,7 +8,7 @@
 class Sprite {
 public:
     std::string path;
-    int widht;
+    int width;
     int height;
     Sprite(std::string img_path, SDL_Renderer *ren, int w, int h);
     void printPath();

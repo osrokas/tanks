@@ -1,11 +1,11 @@
 #include "Sprites.h"
 
 Sprite::Sprite(std::string img_path, SDL_Renderer *ren, int w, int h)
-    : path{img_path},
-    renderer(ren),
-    widht{w},
-    height{h},
-    img(nullptr)
+    : path{img_path}, 
+    renderer(ren), 
+    width{w}, 
+    height{h}, 
+    img(nullptr) 
 {}
 
 void Sprite::printPath() {
@@ -21,7 +21,7 @@ void Sprite::loadSprite(float angle, int x, int y) {
   SDL_Rect texr;
   texr.x = x;
   texr.y = y;
-  texr.w = widht;
+  texr.w = width;
   texr.h = height;
 
   SDL_RenderCopyEx(renderer, img, NULL, &texr, angle, NULL,
