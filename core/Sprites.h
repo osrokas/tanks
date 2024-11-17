@@ -8,10 +8,12 @@
 class Sprite {
 public:
     std::string path;
-    int widht, height;
+    int widht;
+    int height;
     Sprite(std::string img_path, SDL_Renderer *ren, int w, int h);
     void printPath();
-    void loadImage(SDL_Texture *image, float angle);
+    void loadImage();
+    void loadSprite(float angle, int x, int y);
 
   private:
     SDL_Renderer *renderer;
