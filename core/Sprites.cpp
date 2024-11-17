@@ -1,26 +1,29 @@
 #include "Sprites.h"
 
 Sprite::Sprite(std::string img_path, SDL_Renderer *ren, int w, int h)
-    : path{img_path},
-    renderer(ren),
-    widht{w},
-    height{h}
+    : path{img_path}, 
+    renderer(ren), 
+    width{w}, 
+    height{h}, 
+    img(nullptr) 
 {}
 
 void Sprite::printPath() {
     std::cout << path << std::endl;
 }
 
-void Sprite::loadImage(SDL_Texture *img, float angle) {
-  img = IMG_LoadTexture(renderer, path.c_str());
-  // SDL_QueryTexture(img, NULL, NULL, &widht, &height);
+void Sprite::loadImage() { 
+  img = IMG_LoadTexture(renderer, path.c_str()); 
+}
+
+void Sprite::loadSprite(float angle, int x, int y) {
+  // Render sprite to renderer object
   SDL_Rect texr;
-  texr.x = 20;
-  texr.y = 20;
-  texr.w = widht;
+  texr.x = x;
+  texr.y = y;
+  texr.w = width;
   texr.h = height;
-  std::cout << widht << std::endl;
-  std::cout << height << std::endl;
+
   SDL_RenderCopyEx(renderer, img, NULL, &texr, angle, NULL,
                                    SDL_FLIP_NONE);
 }

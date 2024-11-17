@@ -1,5 +1,4 @@
 // For proper sdl initialization
-#include <string>
 #define SDL_MAIN_HANDLED
 #include "KeyboardEvents.h"
 #include "window.h"
@@ -14,9 +13,12 @@ int main(){
   // Variable declarations
   SDL_Window *window = NULL;
   SDL_Renderer *renderer = NULL;
-  SDL_Texture* img;
   bool running = true; // Running state
   SDL_Event event;     // initialize sdl events
+
+  int x = 20;
+  int y = 20;
+  double angle = 0;
 
   // Creating window
   window =
@@ -27,6 +29,7 @@ int main(){
   renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
   Sprite tank(IMG_PATH, renderer, 50, 50);
+  tank.loadImage();
 
   // SDL loop
   while (running) {
@@ -35,20 +38,17 @@ int main(){
       if (event.type == SDL_QUIT) {
         running = false;
       }
-  //     //   Get keyboard input
-  //     else if (event.type == SDL_KEYDOWN) {
-  //       keyboardMovement(event, &texr.x, &texr.y, &angle);
-  //     }
+      //   Get keyboard input
+      else if (event.type == SDL_KEYDOWN) {
+        keyboardMovement(event, &x, &y, &angle);
+      }
     }
-
     // Clear screen
     SDL_RenderClear(renderer);
-    //  Load texture 
-    tank.loadImage(img, 0);
+    //  Load texture
+    tank.loadSprite(angle, x, y);
     SDL_RenderPresent(renderer);
-  // // }
-  SDL_DestroyTexture(img);
-  SDL_DestroyRenderer(renderer);
   }
+  SDL_DestroyRenderer(renderer);
   return 0;
 }
