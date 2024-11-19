@@ -22,7 +22,19 @@ public:
 };
 
 class Player : public Sprite {
+public:
   std::string player_name;
+  Player(std::string img_path, SDL_Renderer *ren, int w, int h,
+         std::string name);
+};
+
+class Enemy : public Sprite {
+public:
+  std::string enemy_name;
+  Enemy(std::string img_path, SDL_Renderer *ren, int w, int h,
+        std::string name);
+  
+  void movement();
 };
 
 #endif

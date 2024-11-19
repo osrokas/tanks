@@ -28,3 +28,15 @@ void Sprite::loadSprite(float angle, int x, int y) {
                                    SDL_FLIP_NONE);
 }
 
+Player::Player(std::string img_path, SDL_Renderer *ren, int w, int h,
+               std::string name)
+    : Sprite(img_path, ren, w, h), player_name{name} 
+{}
+
+Enemy::Enemy(std::string img_path, SDL_Renderer *ren, int w, int h,
+             std::string name)
+    : Sprite(img_path, ren, w, h), enemy_name{name}
+{}
+
+void Enemy::movement(){
+}
