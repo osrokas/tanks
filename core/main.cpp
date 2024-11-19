@@ -6,7 +6,7 @@
 #include <SDL2/SDL_image.h>
 #include "Sprites.h"
 #define IMG_PATH "C:\\dev\\tanks\\asssets\\tank.png"
-
+#define ENEMY_TANK "C:\\dev\\tanks\\asssets\\enemy_tank.png"
 
 int main(){
 
@@ -20,6 +20,7 @@ int main(){
   int y = 20;
   double angle = 0;
 
+
   // Creating window
   window =
       SDL_CreateWindow("Tanks", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
@@ -28,8 +29,14 @@ int main(){
   // Create renderer
   renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-  Sprite tank(IMG_PATH, renderer, 50, 50);
+  Player tank(IMG_PATH, renderer, 50, 50, "player1");
   tank.loadImage();
+
+  Enemy enemy_tank_1(ENEMY_TANK, renderer, 50, 50, "enemy1");
+  enemy_tank_1.loadImage();
+
+  Enemy enemy_tank_2(ENEMY_TANK, renderer, 50, 50, "enemy2");
+  enemy_tank_2.loadImage();
 
   // SDL loop
   while (running) {
@@ -47,6 +54,8 @@ int main(){
     SDL_RenderClear(renderer);
     //  Load texture
     tank.loadSprite(angle, x, y);
+    enemy_tank_1.loadSprite(45.0, 200, 300);
+    enemy_tank_2.loadSprite(90.0, 600, 400);
     SDL_RenderPresent(renderer);
   }
   SDL_DestroyRenderer(renderer);
