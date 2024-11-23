@@ -1,39 +1,21 @@
 #define SDL_MAIN_HANDLED
-#include <SDL2/SDL.h> /* Windows-specific SDL2 library */
+#include <SDL2/SDL.h>
+#include "core/Window.cpp"
+#include <pybind11/pybind11.h>
 
-/* Sets constants */
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
+namespace py = pybind11;
 
-int main(int argc, char **argv) {
 
-  // Creating window
-  SDL_Window *window =
-      SDL_CreateWindow("Tanks", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                       SCREEN_WIDTH, SCREEN_HEIGHT, 0);
+int main(int argc, char **argv) { 
 
-  // Creating renderer
-  SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
-
-  // bool running = true;
-  // while (running) {
-  //   SDL_Event event;
-  //   while (SDL_PollEvent(&event)) {
-  //     switch (event.type) {
-  //     case SDL_QUIT:
-  //       running = false;
-  //       break;
-
-  //     default:
-  //       break;
-  //     }
-  //   }
-
-  SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-  SDL_RenderClear(renderer);
-
-  SDL_RenderPresent(renderer);
-  SDL_Delay(3000);
+  SDL("Tanks", 100, 100);
 
   return 0;
+}
+
+// Expose the function to Python
+PYBIND11_MODULE(sdltest, m) {
+  py::class_<SDL>(m, "SDL").def(py::init<const char*, int, int>(),
+                                py::arg("title"), py::arg("screen_width"),
+                                py::arg("screen_height"));
 }
