@@ -2,7 +2,7 @@
 
 SDL::SDL(const char *title, int width, int height)
     : sdl_tile(title), screen_width(width), screen_height(height),
-      window(nullptr), renderer(nullptr) {}
+      window(nullptr), renderer(nullptr), img(nullptr) {}
 
 
 bool SDL::initalize(){
@@ -16,18 +16,34 @@ bool SDL::initalize(){
     return true;
 }
 
-void *SDL::getRenderer() { return static_cast<void *>(renderer); }
+void SDL::load_image(std::string image_path){
+  img = IMG_LoadTexture(renderer, image_path.c_str());
+}
 
-void SDL::sdlRunning() { 
-    while (running){
-        running = true;
-    };
-    }
+void SDL::render_texture(float angle, int x, int y, int sprite_width, int sprite_height){
+  SDL_Rect texr;
+  texr.x = x;
+  texr.y = y;
+  texr.w = sprite_width;
+  texr.h = sprite_height;
+
+  SDL_RenderCopyEx(renderer, img, NULL, &texr, angle, NULL, SDL_FLIP_NONE);
+  SDL_RenderPresent(renderer);
+}
+
+void SDL::clearWindow() { 
+        SDL_RenderClear(renderer); 
+}
+
+void SDL::destroyWindow() { 
+    SDL_DestroyRenderer(renderer); 
+}
 
 // class Renderer {
 //     public:
 //       Renderer(SDL_Window *window) {
-//         renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+//         renderer = SDL_CreateRenderer(window, -1,
+//         SDL_RENDERER_ACCELERATED);
 //       }
 //     private:
 //     SDL_Renderer *renderer = NULL;

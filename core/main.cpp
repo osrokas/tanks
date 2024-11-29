@@ -20,23 +20,27 @@ int main(){
   // Creating window
   SDL window("Tanks", 600, 600);
 
-  running = window.initalize();
+  running =  window.initalize();
 
-  Sprite tank(IMG_PATH, 100, 100);
+  Sprite tank(window.getRenderer(), IMG_PATH, 100, 100);
   tank.loadImage();
   while (running) {
 
+    std::cout<< x << std::endl;
     while (SDL_PollEvent(&event)) { // Pointing to memory address
       if (event.type == SDL_QUIT) {
         running = false;
       }
     }
-    tank.loadSprite(45.2, 50, 50);
+    tank.loadSprite(90, x, 50);
+    window.clearWindow();
   }
+
+  window.destroyWindow();
 
   // Creating window
 
-  // // Create renderer
+  // Create renderer
   // renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
 
@@ -65,7 +69,7 @@ int main(){
   //   tank.loadSprite(angle, x, y);
   //   enemy_tank_1.loadSprite(45.0, 200, 300);
   //   enemy_tank_2.loadSprite(90.0, 600, 400);
-    // SDL_RenderPresent(renderer);
+
   // SDL_DestroyRenderer(renderer);
   return 0;
 }

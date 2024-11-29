@@ -1,3 +1,4 @@
+from wsgiref import headers
 from pybind11.setup_helpers import Pybind11Extension, build_ext
 from setuptools import setup
 
@@ -8,7 +9,7 @@ ext_modules = [
         ["main.cpp", "core/Window.cpp"],
         include_dirs=[
             "C:/dev/SDL2 VC/SDL2/include",
-            "C:/CLibs/SDL2_image-2.8.2/SDL2/include",
+            "C:/CLibs/SDL2_image-2.8.2/include",
         ],
         library_dirs=[
             "C:/dev/SDL2 VC/SDL2/lib/x64",
@@ -21,6 +22,7 @@ ext_modules = [
 # Set up the package
 setup(
     name="sdltest",
+    headers=["core/Window.h"],
     version="0.1",
     ext_modules=ext_modules,
     cmdclass={"build_ext": build_ext},

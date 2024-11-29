@@ -15,8 +15,6 @@ public:
     void loadSprite(float angle, int x, int y);
 
   private:
-    SDL_Renderer *renderer;
-    SDL_Texture *img;
     SDL_Rect texr;
 };
 

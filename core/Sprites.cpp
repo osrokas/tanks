@@ -2,7 +2,7 @@
 #include <cstddef>
 
 Sprite::Sprite(std::string img_path, int w, int h)
-    : path{img_path}, renderer(nullptr), width{w}, height{h}, img(nullptr) {}
+    : path{img_path}, width{w}, height{h}, img(nullptr) {}
 
 void Sprite::printPath() {
     std::cout << path << std::endl;
@@ -22,7 +22,7 @@ void Sprite::loadSprite(float angle, int x, int y) {
   
   SDL_RenderCopyEx(renderer, img, NULL, &texr, angle, NULL,
                                    SDL_FLIP_NONE);
-  SDL_RenderClear(renderer);
+
   SDL_RenderPresent(renderer);
 }
 
