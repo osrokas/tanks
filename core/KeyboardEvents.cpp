@@ -1,32 +1,33 @@
 #include "KeyboardEvents.h"
+#include "Sprites.h"
 
-void keyboardMovement(SDL_Event event, int *x, int *y, double *angle){
+void keyboardMovement(SDL_Event event, Sprite *sprite) {
   switch (event.key.keysym.sym) {
 
     case SDLK_LEFT:
-      *x = *x - 1;
-      *angle = -90.0;
+      sprite->start_x = sprite->start_x - 1;
+      sprite->angle = -90.0;
       return;
 
     case SDLK_RIGHT:
-      *x = *x + 1;
-      *angle = 90.0;
+      sprite->start_x = sprite->start_x + 1;
+      sprite->angle = 90;
       return;
 
     case SDLK_UP:
-      *y = *y - 1;
-      *angle = 0.0;
+      sprite->start_y = sprite->start_y - 1;
+      sprite->angle = 0;
       return;
 
     case SDLK_DOWN:
-      *y = *y + 1;
-      *angle = -180.0;
+      sprite->start_y = sprite->start_y + 1;
+      sprite->angle = 180;
       return;
 
     default:
-      *x = *x;
-      *y = *y;
-      *angle = *angle;
+      sprite->start_y = sprite->start_y;
+      sprite->start_x = sprite->start_x;
+      sprite->angle = sprite->angle;
       return;
   }
 }

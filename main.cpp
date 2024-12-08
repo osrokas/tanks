@@ -1,11 +1,9 @@
-#include "core/Sprites.h"
 #define SDL_MAIN_HANDLED
-#include <SDL2/SDL.h>
-#include "core/Window.h"
-// #include "core/Sprites.h"
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
-#include <iostream>
+
+#include <SDL2/SDL.h>
+
 #include "core/run.cpp"
 
 namespace py = pybind11;
