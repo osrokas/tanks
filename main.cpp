@@ -1,39 +1,21 @@
 #define SDL_MAIN_HANDLED
-#include <SDL2/SDL.h> /* Windows-specific SDL2 library */
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
 
-/* Sets constants */
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
+#include <SDL2/SDL.h>
 
-int main(int argc, char **argv) {
+#include "core/run.cpp"
 
-  // Creating window
-  SDL_Window *window =
-      SDL_CreateWindow("Tanks", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                       SCREEN_WIDTH, SCREEN_HEIGHT, 0);
+namespace py = pybind11;
 
-  // Creating renderer
-  SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
 
-  // bool running = true;
-  // while (running) {
-  //   SDL_Event event;
-  //   while (SDL_PollEvent(&event)) {
-  //     switch (event.type) {
-  //     case SDL_QUIT:
-  //       running = false;
-  //       break;
-
-  //     default:
-  //       break;
-  //     }
-  //   }
-
-  SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-  SDL_RenderClear(renderer);
-
-  SDL_RenderPresent(renderer);
-  SDL_Delay(3000);
-
-  return 0;
+PYBIND11_MODULE(sdltest, m) {
+  py::class_<Sprite>(m, "Sprite")
+      .def(py::init<std::string, int, int, int, int, int>(),
+      py::arg("img_path"), py::arg("width"), py::arg("height"),
+      py::arg("start_x"), py::arg("start_y"), py::arg("angle"));
+  
+  m.def("run", &run, "load sprites");
 }
+
+

@@ -1,40 +1,13 @@
-#ifndef SPRITES_H
-#define SPRITES_H
+#pragma once
 #include <iostream>
-#define SDL_MAIN_HANDLED
-#include <SDL2/SDL.h> // Windows sdl library
-#include <SDL2/SDL_image.h>
 
-class Sprite {
-public:
-    std::string path;
-    int width;
-    int height;
-    Sprite(std::string img_path, SDL_Renderer *ren, int w, int h);
-    void printPath();
-    void loadImage();
-    void loadSprite(float angle, int x, int y);
 
-  private:
-    SDL_Renderer *renderer;
-    SDL_Texture *img;
-    SDL_Rect texr;
+struct Sprite {
+  std::string img_path;
+  int width;
+  int height;
+  int start_x;
+  int start_y;
+  int angle;
 };
 
-class Player : public Sprite {
-public:
-  std::string player_name;
-  Player(std::string img_path, SDL_Renderer *ren, int w, int h,
-         std::string name);
-};
-
-class Enemy : public Sprite {
-public:
-  std::string enemy_name;
-  Enemy(std::string img_path, SDL_Renderer *ren, int w, int h,
-        std::string name);
-  
-  void movement();
-};
-
-#endif
