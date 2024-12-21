@@ -5,10 +5,16 @@ from setuptools import setup
 ext_modules = [
     Pybind11Extension(
         "sdltest",  # Name of the Python module
-        ["main.cpp", "core/Window.cpp", "core/KeyboardEvents.cpp"],  # source file
+        [
+            "main.cpp",
+            "core/Window.cpp",
+            "core/KeyboardEvents.cpp",
+            "C:/CLibs/glad/src/glad.c",
+        ],  # source file
         include_dirs=[
             "C:/dev/SDL2 VC/SDL2/include",
             "C:/CLibs/SDL2_image-2.8.2/include",
+            "C:/CLibs/glad/include",
         ],
         library_dirs=[
             "C:/dev/SDL2 VC/SDL2/lib/x64",

@@ -1,1 +1,0 @@
-g++ core/run.cpp core/KeyboardEvents.cpp core/window.h core/Window.cpp core/KeyboardEvents.h core/Sprites.cpp core/Sprites.h -g -pedantic -o tanks -lSDL2 -lSDL2_image

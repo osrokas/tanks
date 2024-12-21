@@ -28,7 +28,7 @@ int run(std::vector<Sprite>& sprites) {
       }
       //   Get keyboard input
       else if (event.type == SDL_KEYDOWN) {
-        keyboardMovement(event, &sprites[0]);
+        keyboardMovement(event, &sprites[1]);
           }
         }     
       window.render_texture(sprites.data(), sprites.size());

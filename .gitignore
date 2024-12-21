@@ -5,3 +5,4 @@ dist
 build
 sdltest.egg-info
 csrc
+dll
