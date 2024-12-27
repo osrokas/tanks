@@ -9,7 +9,12 @@ python setup.py install
 
 ## 3. Run install second time:
 ```
-python setup.py install
+python setup.py build_ext --inplace
+```
+
+## 4. To clean the project, run the following command:
+```
+python setup.py clean --all
 ```
 
 # To run the project, for test run the following command:

@@ -3,11 +3,12 @@
 
 
 struct Sprite {
-  std::string img_path;
-  int width;
-  int height;
-  int start_x;
-  int start_y;
-  int angle;
+  float x_pos;
+  float y_pos;
+  float z_pos;
+  float r;
+  float g;
+  float b;
+  float tx1;
+  float tx2;
 };
-

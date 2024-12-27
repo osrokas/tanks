@@ -11,10 +11,10 @@ namespace py = pybind11;
 
 PYBIND11_MODULE(sdltest, m) {
   py::class_<Sprite>(m, "Sprite")
-      .def(py::init<std::string, int, int, int, int, int>(),
-      py::arg("img_path"), py::arg("width"), py::arg("height"),
-      py::arg("start_x"), py::arg("start_y"), py::arg("angle"));
-  
+      .def(py::init<float, float, float, float, float, float, float, float>(),
+           py::arg("x_pos"), py::arg("y_pos"), py::arg("z_pos"),
+           py::arg("r"), py::arg("g"), py::arg("b"), py::arg("tx1"), py::arg("tx2"));
+
   m.def("run", &run, "load sprites");
 }
 

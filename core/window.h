@@ -1,11 +1,13 @@
 #pragma once
 #include <cstddef>
 #define SDL_MAIN_HANDLED
+#include "Sprites.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <glad/glad.h>
 #include <iostream>
-#include "Sprites.h"
 #include <vector>
+
 
 class SDL {
     public:
@@ -20,10 +22,12 @@ class SDL {
       void render_texture(Sprite *sprites, int n);
       void clearWindow();
       void destroyWindow();
+      void renderOpenGL();
 
     private:
       SDL_Window* window = NULL;
       SDL_Renderer* renderer = NULL;
       SDL_Texture* img = NULL;
+      SDL_GLContext opengl_context = NULL;
       std::vector<SDL_Texture *> textures;
 };
