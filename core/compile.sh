@@ -1,1 +1,1 @@
-g++  -IC:/CLibs/glad/include main.cpp KeyboardEvents.cpp window.h Window.cpp KeyboardEvents.h Shaders.h Shaders.cpp Sprites.h C:/CLibs/glad/src/glad.c -g -pedantic -o tanks -lSDL2 -lSDL2_image 
+g++  -IC:/CLibs/glad/include main.cpp KeyboardEvents.cpp window.h Window.cpp KeyboardEvents.h Shaders.h Shaders.cpp Sprites.h Geometry.h C:/CLibs/glad/src/glad.c -g -pedantic -o tanks -lSDL2 -lSDL2_image 

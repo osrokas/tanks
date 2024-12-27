@@ -18,10 +18,16 @@ void Buffer::loadToBuffer(bool wireframe) {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, geom.indecies.size() * sizeof(float), geom.indecies.data(),
                  GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3* sizeof(float)));
     glEnableVertexAttribArray(1);
+
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
+                          (void *)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
+
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glBindVertexArray(0);
@@ -84,3 +90,28 @@ void ShaderProgram::create(){
 void ShaderProgram::useShader() { 
   glUseProgram(shaderProgram); 
 }
+
+
+Texture::Texture(const char *textPath) :
+  texturePath(textPath) {}
+
+void Texture::load_texture() { 
+  glGenTextures(1, &texture); 
+  glBindTexture(GL_TEXTURE_2D, texture);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+                  GL_LINEAR_MIPMAP_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  int width, height, nrChannels;
+  unsigned char *data =
+      stbi_load(texturePath, &width, &height, &nrChannels, 0);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
+               GL_UNSIGNED_BYTE, data);
+  glGenerateMipmap(GL_TEXTURE_2D);
+  stbi_image_free(data);
+  }
+
+  void Texture::draw_texture() { 
+    glBindTexture(GL_TEXTURE_2D, texture);
+   }

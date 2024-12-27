@@ -1,5 +1,4 @@
 #include "Window.h"
-#include "Sprites.h"
 #include <cstddef>
 
 
@@ -37,27 +36,6 @@ bool SDL::initalize(){
   SDL_GetWindowSize(window, &screen_width, &screen_height);
   glViewport(0, 0, screen_width, screen_height);
   return true;
-}
-
-void SDL::load_sprites(Sprite *sprites, int n){
-  for (int i = 0; i < n; i++) {
-    img = IMG_LoadTexture(renderer, sprites[i].img_path.c_str());
-    textures.push_back(img);
-    }
-}
-
-void SDL::render_texture(Sprite *sprites, int n) {
-
-  for (int i = 0; i < n; i++){
-    SDL_Rect texr;
-    texr.x = sprites[i].start_x;
-    texr.y = sprites[i].start_y;
-    texr.w = sprites[i].width;
-    texr.h = sprites[i].height;
-    SDL_RenderCopyEx(renderer, textures[i], NULL, &texr, sprites[i].angle, NULL, SDL_FLIP_NONE);
-  }
-
-  SDL_RenderPresent(renderer);
 }
 
 void SDL::clearWindow() { 
