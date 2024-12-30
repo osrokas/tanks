@@ -6,21 +6,6 @@
 #include <iostream>
 #include <sstream>
 
-class Buffer{
-    
-    public:
-      Geometry geom;
-      Buffer(Geometry geomtry);
-      void loadToBuffer(bool wireframe);
-      void drawShader();
-      void clearShader();
-
-    private:
-      GLuint VBO;
-      GLuint VAO;
-      GLuint EBO;
-};
-
 
 class Shader{
 
@@ -60,15 +45,4 @@ class ShaderProgram{
 
   private:
     unsigned int shaderProgram;
-};
-
-
-class Texture{
-  public:
-    const char *texturePath;
-    Texture(const char *textPath);
-    void load_texture();
-    void draw_texture();
-  private:
-    unsigned int texture;
 };
