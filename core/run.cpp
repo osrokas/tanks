@@ -3,28 +3,27 @@
   // For proper sdl initialization
 #define SDL_MAIN_HANDLED
 #include "KeyboardEvents.h"
-#include "Shaders.h"
+#include "Object.h"
 #include "Sprites.h"
 #include "Window.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
 
-int run(bool wireframe, std::vector<Sprite> &sprites, const char *texture_path) {
-  Shader vertexShader("C:\\dev\\tanks\\shaders\\v_shader.vert");
-  Shader fragmentShader("C:\\dev\\tanks\\shaders\\f_shader.vert");
-  Geometry triangle;
-  for (int i =0 ; i < sprites.size(); i++){
-    triangle.vertices.insert(triangle.vertices.end(),
-                             {sprites[i].x_pos, sprites[i].y_pos,
-                              sprites[i].z_pos, sprites[i].r, sprites[i].g,
-                              sprites[i].b, sprites[i].tx1, sprites[i].tx2});
-    triangle.indecies.insert(triangle.indecies.end(), i);
-  };
+int run(bool wireframe, std::vector<Sprite> &sprites,
+        std::vector<unsigned int> &indecies,
+        const char *texture_path, const char *vertexShader,
+        const char *fragmentShader) {
 
+  std::vector<Object> objects;
 
-  unsigned int vShader;
-  unsigned int fShader;
+  Object objectTank = {vertexShader, fragmentShader, texture_path, sprites, indecies};
+
+  objects.push_back(objectTank);
+
+  ObjectsList objArray;
+  objArray.ojbectsArray = objects;
+
   // Variable declarations
   bool running;    // Running state
   SDL_Event event; // initialize sdl events
@@ -34,21 +33,28 @@ int run(bool wireframe, std::vector<Sprite> &sprites, const char *texture_path) 
 
   running = window.initalize();
 
-  vShader = vertexShader.compileShader(GL_VERTEX_SHADER);
-  fShader = fragmentShader.compileShader(GL_FRAGMENT_SHADER);
+  Objects openGlModels;
 
-  ShaderProgram shader_program(vShader, fShader);
+  for (int i = 0; i < objArray.ojbectsArray.size(); i++) {
 
-  shader_program.create();
+    BaseModel object1(objArray.ojbectsArray[i].vertexShaderPath,
+                      objArray.ojbectsArray[i].fragmentShaderPath,
+                      objArray.ojbectsArray[i].wallTexturePath1);
+    for (int j = 0; j < objArray.ojbectsArray[i].spritesVector.size(); j++) {
+      object1.addVector(objArray.ojbectsArray[i].spritesVector[j]);
+    }
 
-  Buffer triangle_buffer(triangle);
-  triangle_buffer.loadToBuffer(wireframe);
+    for (int j = 0; j < objArray.ojbectsArray[i].indecies.size(); j++) {
+      object1.addIndex(objArray.ojbectsArray[i].indecies[j]);
+    }
 
-  Texture triangle_texture(texture_path);
+    object1.createSprite();
+    object1.create_model();
 
-  triangle_texture.load_texture();
+    openGlModels.openglModels.push_back(object1);
+  };
 
-      while (running) {
+  while (running) {
     while (SDL_PollEvent(&event)) { // Pointing to memory address
       if (event.type == SDL_QUIT || event.key.keysym.sym == SDLK_ESCAPE) {
         running = false;
@@ -61,10 +67,11 @@ int run(bool wireframe, std::vector<Sprite> &sprites, const char *texture_path) 
         }
       }
     }
-    triangle_buffer.clearShader();
-    triangle_texture.draw_texture();
-    shader_program.useShader();
-    triangle_buffer.drawShader();
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+    for (int i = 0; i < openGlModels.openglModels.size(); i++) {
+      openGlModels.openglModels[i].draw_model();
+    };
     window.renderOpenGL();
   }
   window.destroyWindow();

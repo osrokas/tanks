@@ -34,8 +34,11 @@ void ShaderProgram::create(){
   glAttachShader(shaderProgram, vertexShader);
   glAttachShader(shaderProgram, fragmentShader);
   glLinkProgram(shaderProgram);
+  glDeleteShader(vertexShader);
+  glDeleteShader(fragmentShader);
 }
 
 void ShaderProgram::useShader() { 
   glUseProgram(shaderProgram); 
+
 }

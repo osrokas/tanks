@@ -7,8 +7,11 @@ ext_modules = [
         "sdltest",  # Name of the Python module
         [
             "main.cpp",
+            "core/Buffer.cpp",
             "core/Window.cpp",
+            "core/Models.cpp",
             "core/Shaders.cpp",
+            "core/Texture.cpp",
             "core/KeyboardEvents.cpp",
             "core/stb_image.cpp",
             r"C:/CLibs/glad/src/glad.c",
@@ -38,6 +41,10 @@ setup(
         "core/Shaders.h",
         "core/Sprites.h",
         "core/stb_image.h",
+        "core/Buffer.h",
+        "core/Models.h",
+        "core/Texture.h",
+        "core/Object.h"
     ],
     version="0.2",
     ext_modules=ext_modules,

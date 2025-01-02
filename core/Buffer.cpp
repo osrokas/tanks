@@ -39,11 +39,6 @@ void Buffer::loadToBuffer(bool wireframe) {
     }
 };
 
-void Buffer::clearShader(){
-  glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-  glClear(GL_COLOR_BUFFER_BIT);
-};
-
 void Buffer::drawShader(){
   glBindVertexArray(VAO);
   glDrawElements(GL_TRIANGLES, geom.indecies.size(), GL_UNSIGNED_INT, 0);

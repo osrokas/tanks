@@ -12,11 +12,24 @@ import sdltest
 # tank3 = sdltest.Sprite(r"C:\dev\tanks\asssets\enemy_tank.png", 20, 20, 50, 50, 0)
 # tank4 = sdltest.Sprite(r"C:\dev\tanks\asssets\enemy_tank.png", 20, 20, 200, 100, 0)
 
-coord1 = sdltest.Sprite(0.5, 0.5, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0)
-coord2 = sdltest.Sprite(0.5, -0.5, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0)
-coord3 = sdltest.Sprite(-0.3, 0.3, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0)
+coord1 = sdltest.Sprite(0.5, 0.2, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0)
+coord2 = sdltest.Sprite(0.5, 0.3, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0)
+coord3 = sdltest.Sprite(0.3, 0.3, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0)
+coord4 = sdltest.Sprite(0.3, 0.2, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0)
 
-texture_path = r"C:\dev\tanks\asssets\back.jpg"
+
+indecies = [0,1,3,1,2,3]
+
+texture_path = r"C:\dev\tanks\asssets\tank.JPG"
+vertex_shader_path = r"C:\dev\tanks\shaders\v_shader.vert"
+fragment_shader_path = r"C:\dev\tanks\shaders\f_shader.vert"
 
 
-sdltest.run(False, [coord1, coord2, coord3], texture_path)
+sdltest.run(
+    False,
+    [coord1, coord2, coord3, coord4],
+    indecies,
+    texture_path,
+    vertex_shader_path,
+    fragment_shader_path,
+)

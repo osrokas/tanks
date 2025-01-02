@@ -27,7 +27,6 @@ void BaseModel::create_model(){
 
 
 void BaseModel::draw_model(){
-    buffering->clearShader(); 
     texture.draw_texture();
     shaderProgram->useShader();
     buffering->drawShader();

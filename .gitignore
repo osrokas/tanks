@@ -6,3 +6,4 @@ build
 sdltest.egg-info
 csrc
 dll
+*.pyd
