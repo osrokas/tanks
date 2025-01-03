@@ -8,13 +8,12 @@
 
 class BaseModel{
     public:
-        const char *vertexShaderPath;
-        const char *fragmentShaderPath;
-        const char *texturePath;
-        
-        
-        BaseModel(const char *vShaderPath, const char *fShaderPath,
-                  const char *tPath);
+        std::string vertexShaderPath;
+        std::string fragmentShaderPath;
+        std::string texturePath;
+
+        BaseModel(std::string vShaderPath, std::string fShaderPath,
+                  std::string tPath);
         void create_model();
         void draw_model();
         void addVector(Sprite &spriteVector);

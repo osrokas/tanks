@@ -5,9 +5,9 @@
 #include "Models.h"
 
 struct Object {
-  const char *vertexShaderPath;
-  const char *fragmentShaderPath;
-  const char *wallTexturePath1;
+  std::string vertexShaderPath;
+  std::string fragmentShaderPath;
+  std::string wallTexturePath1;
   std::vector<Sprite> spritesVector;
   std::vector<unsigned int> indecies;
 };

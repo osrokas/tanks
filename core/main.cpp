@@ -62,6 +62,9 @@ int main() {
                       objArray.ojbectsArray[i].wallTexturePath1);
     for (int j = 0; j < objArray.ojbectsArray[i].spritesVector.size(); j++) {
       object1.addVector(objArray.ojbectsArray[i].spritesVector[j]);
+      std::cout << objArray.ojbectsArray[i].spritesVector[j].r << std::endl;
+      std::cout << objArray.ojbectsArray[i].spritesVector[j].g << std::endl;
+      std::cout << objArray.ojbectsArray[i].spritesVector[j].b << std::endl;
     }
 
     for (int j = 0; j < objArray.ojbectsArray[i].indecies.size(); j++) {

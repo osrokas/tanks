@@ -1,10 +1,9 @@
 #include "Shaders.h"
 
-Shader::Shader(const char *pathShader)
-    : shaderPath(pathShader)
-{}
+Shader::Shader(std::string pathShader) : shaderPath(pathShader) {}
 
 unsigned int Shader::compileShader(GLenum type) {
+  std::cout<<shaderPath<<std::endl;
   int success;
   char infoLog[512];
   std::string code;

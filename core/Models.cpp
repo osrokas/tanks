@@ -2,17 +2,18 @@
 #include "Buffer.h"
 #include "Geometry.h"
 
-BaseModel::BaseModel(const char *vShaderPath, const char *fShaderPath,
-                     const char *tPath)
-    : vertexShaderPath(vShaderPath), fragmentShaderPath(fShaderPath),
-      texturePath(tPath), vertexShader(vShaderPath),
-      fragmentShader(fShaderPath), texture(texturePath),
-       shaderProgram(nullptr), buffering(nullptr) {};
+BaseModel::BaseModel(std::string vShaderPath, std::string fShaderPath,
+                     std::string tPath)
+    : vertexShaderPath(vShaderPath.c_str()), fragmentShaderPath(fShaderPath.c_str()),
+      texturePath(tPath.c_str()), vertexShader(vShaderPath.c_str()),
+      fragmentShader(fShaderPath.c_str()), texture(tPath.c_str()),
+      shaderProgram(nullptr), buffering(nullptr){};
 
 void BaseModel::create_model(){
   unsigned int vShader;
   unsigned int fShader;
-  
+  std::cout << vertexShaderPath << std::endl;
+  std::cout << "labas" << std::endl;
   vShader = vertexShader.compileShader(GL_VERTEX_SHADER);
   fShader = fragmentShader.compileShader(GL_FRAGMENT_SHADER);
 

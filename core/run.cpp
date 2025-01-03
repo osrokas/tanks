@@ -1,33 +1,21 @@
 // For proper sdl initialization
+#include <iostream>
 #include <vector>
   // For proper sdl initialization
 #define SDL_MAIN_HANDLED
 #include "KeyboardEvents.h"
 #include "Object.h"
-#include "Sprites.h"
 #include "Window.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
+int run(bool wireframe, std::vector<Object> objects) {
 
-int run(bool wireframe, std::vector<Sprite> &sprites,
-        std::vector<unsigned int> &indecies,
-        const char *texture_path, const char *vertexShader,
-        const char *fragmentShader) {
-
-  std::vector<Object> objects;
-
-  Object objectTank = {vertexShader, fragmentShader, texture_path, sprites, indecies};
-
-  objects.push_back(objectTank);
-
-  ObjectsList objArray;
-  objArray.ojbectsArray = objects;
-
-  // Variable declarations
-  bool running;    // Running state
+  // Get the objects from the vector
+      // Variable declarations
+  bool running; // Running state
   SDL_Event event; // initialize sdl events
-
+  
   // Creating window
   SDL window("Tanks", 600, 600);
 
@@ -35,22 +23,23 @@ int run(bool wireframe, std::vector<Sprite> &sprites,
 
   Objects openGlModels;
 
-  for (int i = 0; i < objArray.ojbectsArray.size(); i++) {
+    for (int i = 0; i < objects.size(); i++) {
+        // Dereference the pointer to get the value
+        BaseModel object1(objects[i].vertexShaderPath,
+                          objects[i].fragmentShaderPath,
+                          objects[i].wallTexturePath1);
 
-    BaseModel object1(objArray.ojbectsArray[i].vertexShaderPath,
-                      objArray.ojbectsArray[i].fragmentShaderPath,
-                      objArray.ojbectsArray[i].wallTexturePath1);
-    for (int j = 0; j < objArray.ojbectsArray[i].spritesVector.size(); j++) {
-      object1.addVector(objArray.ojbectsArray[i].spritesVector[j]);
+        // Dereference the pointer to get the value
+        for (int j = 0; j < objects[i].spritesVector.size(); j++) {
+          object1.addVector(objects[i].spritesVector[j]);
+
     }
 
-    for (int j = 0; j < objArray.ojbectsArray[i].indecies.size(); j++) {
-      object1.addIndex(objArray.ojbectsArray[i].indecies[j]);
+    for (int j = 0; j <objects[i].indecies.size(); j++) {
+      object1.addIndex(objects[i].indecies[j]);
     }
-
     object1.createSprite();
     object1.create_model();
-
     openGlModels.openglModels.push_back(object1);
   };
 

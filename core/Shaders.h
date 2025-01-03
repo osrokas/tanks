@@ -10,8 +10,8 @@
 class Shader{
 
   public:
-    const char *shaderPath;
-    Shader(const char *pathShader);
+    std::string shaderPath;
+    Shader(std::string pathShader);
     unsigned int compileShader(GLenum type);
 
   private:

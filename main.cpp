@@ -1,3 +1,8 @@
+#include "core/Object.h"
+#include "core/Sprites.h"
+#include <memory>
+#include <string>
+#include <vector>
 #define SDL_MAIN_HANDLED
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -15,7 +20,13 @@ PYBIND11_MODULE(sdltest, m) {
            py::arg("x_pos"), py::arg("y_pos"), py::arg("z_pos"),
            py::arg("r"), py::arg("g"), py::arg("b"), py::arg("tx1"), py::arg("tx2"));
 
+  py::class_<Object>(m, "Object")
+      .def(
+          py::init<std::string &, std::string &, std::string &, std::vector<struct Sprite> &, std::vector<unsigned int> &>(),
+          py::arg("vertex_shader"), py::arg("fragment_shader"),
+          py::arg("texture_path"), py::arg("sprites"), py::arg("indecies"));
+  // .def_readwrite("sprites", &Object::spritesVector)
+  // .def_readwrite("indecies", &Object::indecies);
+
   m.def("run", &run, "load sprites");
 }
-
-
