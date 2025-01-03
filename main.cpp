@@ -25,8 +25,6 @@ PYBIND11_MODULE(sdltest, m) {
           py::init<std::string &, std::string &, std::string &, std::vector<struct Sprite> &, std::vector<unsigned int> &>(),
           py::arg("vertex_shader"), py::arg("fragment_shader"),
           py::arg("texture_path"), py::arg("sprites"), py::arg("indecies"));
-  // .def_readwrite("sprites", &Object::spritesVector)
-  // .def_readwrite("indecies", &Object::indecies);
 
   m.def("run", &run, "load sprites");
 }

@@ -12,8 +12,6 @@ BaseModel::BaseModel(std::string vShaderPath, std::string fShaderPath,
 void BaseModel::create_model(){
   unsigned int vShader;
   unsigned int fShader;
-  std::cout << vertexShaderPath << std::endl;
-  std::cout << "labas" << std::endl;
   vShader = vertexShader.compileShader(GL_VERTEX_SHADER);
   fShader = fragmentShader.compileShader(GL_FRAGMENT_SHADER);
 
