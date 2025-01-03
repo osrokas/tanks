@@ -6,3 +6,5 @@ build
 sdltest.egg-info
 csrc
 dll
+*.pyd
+sdltest.cp312-win_amd64.pyd

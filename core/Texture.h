@@ -7,8 +7,8 @@
 
 class Texture {
 public:
-  const char *texturePath;
-  Texture(const char *textPath);
+  std::string texturePath;
+  Texture(std::string textPath);
   void load_texture();
   void draw_texture();
 

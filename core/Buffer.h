@@ -12,7 +12,6 @@ public:
   Buffer(Geometry geomtry);
   void loadToBuffer(bool wireframe);
   void drawShader();
-  void clearShader();
 
 private:
   GLuint VBO;
