@@ -1,4 +1,5 @@
 // For proper sdl initialization
+#include "Rotate.h"
 #include <vector>
 #define SDL_MAIN_HANDLED
 #include "KeyboardEvents.h"
@@ -10,7 +11,7 @@
 #include "Object.h"
 
 int main() {
-  const char *vertexShaderPath("C:\\dev\\tanks\\shaders\\v_shader.vert");
+  const char *vertexShaderPath("C:\\dev\\tanks\\shaders\\v_rotate_shader.vert");
   const char *fragmentShaderPath("C:\\dev\\tanks\\shaders\\f_shader.vert");
   const char *wallTexturePath1 = "C:\\dev\\tanks\\asssets\\tank.JPG";
 
@@ -55,6 +56,8 @@ int main() {
 
   Objects openGlModels;
 
+  unsigned int rotationShader;
+
   for (int i = 0; i <  objArray.ojbectsArray.size(); i++){
 
     BaseModel object1(objArray.ojbectsArray[i].vertexShaderPath,
@@ -77,6 +80,9 @@ int main() {
     openGlModels.openglModels.push_back(object1);
   };
 
+  rotationShader = openGlModels.openglModels[0].getShaderProgram();
+  Rotate rotation(rotationShader);
+
   while (running) {
     while (SDL_PollEvent(&event)) { // Pointing to memory address
       if (event.type == SDL_QUIT || event.key.keysym.sym == SDLK_ESCAPE) {
@@ -97,10 +103,10 @@ int main() {
         for (int i = 0; i < openGlModels.openglModels.size(); i++){
           openGlModels.openglModels[i].draw_model();
         };
-          // object1.draw_model();
+        rotation.rotate_z();
+        // object1.draw_model();
         // object2.draw_model();
         window.renderOpenGL();
-
-      }
+  }
   window.destroyWindow();
 }

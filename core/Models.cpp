@@ -1,6 +1,7 @@
 #include "Models.h"
 #include "Buffer.h"
 #include "Geometry.h"
+#include "Shaders.h"
 
 BaseModel::BaseModel(std::string vShaderPath, std::string fShaderPath,
                      std::string tPath)
@@ -16,9 +17,8 @@ void BaseModel::create_model(){
   fShader = fragmentShader.compileShader(GL_FRAGMENT_SHADER);
 
   shaderProgram = new ShaderProgram(vShader, fShader);
-
   buffering = new Buffer(geomObject);
-
+  
   shaderProgram->create();
   buffering->loadToBuffer(false);
   texture.load_texture();
@@ -49,4 +49,8 @@ void BaseModel::addIndex(unsigned int index){
 void BaseModel::createSprite(){
   geomObject.indecies = indecies;
   geomObject.vertices = vertices;
+};
+
+unsigned int BaseModel::getShaderProgram(){
+  return shaderProgram->getShaderProgram();
 };

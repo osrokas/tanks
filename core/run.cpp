@@ -8,6 +8,7 @@
 #include "Window.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include "Rotate.h"
 
 int run(bool wireframe, std::vector<Object> objects) {
 
@@ -22,16 +23,17 @@ int run(bool wireframe, std::vector<Object> objects) {
   running = window.initalize();
 
   Objects openGlModels;
+  unsigned int rotationShader;
 
-    for (int i = 0; i < objects.size(); i++) {
-        // Dereference the pointer to get the value
-        BaseModel object1(objects[i].vertexShaderPath,
-                          objects[i].fragmentShaderPath,
-                          objects[i].wallTexturePath1);
+  for (int i = 0; i < objects.size(); i++) {
+    // Dereference the pointer to get the value
+    BaseModel object1(objects[i].vertexShaderPath,
+                      objects[i].fragmentShaderPath,
+                      objects[i].wallTexturePath1);
 
-        // Dereference the pointer to get the value
-        for (int j = 0; j < objects[i].spritesVector.size(); j++) {
-          object1.addVector(objects[i].spritesVector[j]);
+    // Dereference the pointer to get the value
+    for (int j = 0; j < objects[i].spritesVector.size(); j++) {
+      object1.addVector(objects[i].spritesVector[j]);
 
     }
 
@@ -43,7 +45,12 @@ int run(bool wireframe, std::vector<Object> objects) {
     openGlModels.openglModels.push_back(object1);
   };
 
+  rotationShader = openGlModels.openglModels[0].getShaderProgram();
+  Rotate rotation(rotationShader);
+  float angle = 0.0f;
+  float increment = 0.1f;
   while (running) {
+    angle = angle + increment;
     while (SDL_PollEvent(&event)) { // Pointing to memory address
       if (event.type == SDL_QUIT || event.key.keysym.sym == SDLK_ESCAPE) {
         running = false;
@@ -61,6 +68,7 @@ int run(bool wireframe, std::vector<Object> objects) {
     for (int i = 0; i < openGlModels.openglModels.size(); i++) {
       openGlModels.openglModels[i].draw_model();
     };
+    rotation.rotate_z(angle);
     window.renderOpenGL();
   }
   window.destroyWindow();

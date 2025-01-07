@@ -15,11 +15,13 @@ ext_modules = [
             "core/KeyboardEvents.cpp",
             "core/stb_image.cpp",
             r"C:/CLibs/glad/src/glad.c",
+            "core/Rotate.cpp",
         ],  # source file
         include_dirs=[
             r"C:/dev/SDL2 VC/SDL2/include",
             r"C:/CLibs/SDL2_image-2.8.2/include",
             r"C:/CLibs/glad/include",
+            r"C:/dev/tanks",
         ],
         library_dirs=[
             r"C:/dev/SDL2 VC/SDL2/lib/x64",
@@ -44,7 +46,8 @@ setup(
         "core/Buffer.h",
         "core/Models.h",
         "core/Texture.h",
-        "core/Object.h"
+        "core/Object.h",
+        "core/Rotate.h"
     ],
     version="0.2",
     ext_modules=ext_modules,

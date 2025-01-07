@@ -11,7 +11,6 @@ class BaseModel{
         std::string vertexShaderPath;
         std::string fragmentShaderPath;
         std::string texturePath;
-
         BaseModel(std::string vShaderPath, std::string fShaderPath,
                   std::string tPath);
         void create_model();
@@ -21,6 +20,8 @@ class BaseModel{
         // Fix create sprite 
         // Error with creating geometry 
         void createSprite();
+        unsigned int getShaderProgram();
+        
 
       private:
         Shader vertexShader;

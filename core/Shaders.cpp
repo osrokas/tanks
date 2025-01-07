@@ -40,3 +40,7 @@ void ShaderProgram::useShader() {
   glUseProgram(shaderProgram); 
 
 }
+
+unsigned int ShaderProgram::getShaderProgram(){
+  return shaderProgram;
+} 
