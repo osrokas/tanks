@@ -28,10 +28,20 @@ ShaderProgram::ShaderProgram(unsigned int vShader, unsigned int fShader)
       shaderProgram() {}
 
 void ShaderProgram::create(){
+  int success;
+  char infoLog[512];
   shaderProgram = glCreateProgram();
   glAttachShader(shaderProgram, vertexShader);
   glAttachShader(shaderProgram, fragmentShader);
   glLinkProgram(shaderProgram);
+  if (!success) {
+    glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+    std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n"
+              << infoLog << std::endl;
+  }
+  else {
+    std::cout << "Shader program created successfully" << std::endl;
+  }
   glDeleteShader(vertexShader);
   glDeleteShader(fragmentShader);
 }

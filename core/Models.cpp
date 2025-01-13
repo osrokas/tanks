@@ -24,7 +24,6 @@ void BaseModel::create_model(){
   texture.load_texture();
 };
 
-
 void BaseModel::draw_model(){
     texture.draw_texture();
     shaderProgram->useShader();
@@ -49,6 +48,12 @@ void BaseModel::addIndex(unsigned int index){
 void BaseModel::createSprite(){
   geomObject.indecies = indecies;
   geomObject.vertices = vertices;
+};
+
+void BaseModel::get_vertices() { 
+  // Get vertices from geometry object
+
+  std::cout << geomObject.vertices[0] << std::endl;
 };
 
 unsigned int BaseModel::getShaderProgram(){

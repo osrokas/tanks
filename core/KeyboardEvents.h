@@ -2,4 +2,4 @@
 #include <iostream>
 #include "Sprites.h"
 
-void keyboardMovement(SDL_Event event, Sprite *sprite);
+void keyboardMovement(SDL_Event event, float *angle, float *x, float *y);

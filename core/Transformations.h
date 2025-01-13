@@ -1,0 +1,22 @@
+#pragma once
+#include <glad/glad.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+struct Extent{
+  float maxX;
+  float maxY;
+  float minX;
+  float minY;
+};
+
+class Transformation {
+  public:
+    unsigned int shaderProgramID;
+    Transformation(unsigned int shaderID);
+    void move(float angle, float x, float y, Extent extent);
+
+  private:
+    unsigned int transformLoc;
+  };

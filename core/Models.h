@@ -21,6 +21,7 @@ class BaseModel{
         // Error with creating geometry 
         void createSprite();
         unsigned int getShaderProgram();
+        void get_vertices();
         
 
       private:

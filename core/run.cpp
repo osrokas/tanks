@@ -1,14 +1,16 @@
 // For proper sdl initialization
 #include <iostream>
+#include <ostream>
 #include <vector>
   // For proper sdl initialization
 #define SDL_MAIN_HANDLED
 #include "KeyboardEvents.h"
 #include "Object.h"
+#include "Transformations.h"
 #include "Window.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include "Rotate.h"
+
 
 int run(bool wireframe, std::vector<Object> objects) {
 
@@ -46,15 +48,25 @@ int run(bool wireframe, std::vector<Object> objects) {
   };
 
   rotationShader = openGlModels.openglModels[0].getShaderProgram();
-  Rotate rotation(rotationShader);
+
+  Transformation movement(rotationShader);
+
   float angle = 0.0f;
-  float increment = 0.1f;
+  float x = 0.0f;
+  float y = 0.0f;
+
+  Extent bounds = {0.8f, 0.8f, -0.8f, -0.8f};
   while (running) {
-    angle = angle + increment;
     while (SDL_PollEvent(&event)) { // Pointing to memory address
       if (event.type == SDL_QUIT || event.key.keysym.sym == SDLK_ESCAPE) {
         running = false;
       }
+
+      if (event.type == SDL_KEYDOWN) {
+        keyboardMovement(event, &angle, &x, &y);
+        std::cout << angle << std::endl;
+      }
+      
 
       if (event.type == SDL_WINDOWEVENT) {
         if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
@@ -63,12 +75,18 @@ int run(bool wireframe, std::vector<Object> objects) {
         }
       }
     }
+
+    // TODO  Create object coordinates limits and after shader transformation 
+    // update object coordinates
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     for (int i = 0; i < openGlModels.openglModels.size(); i++) {
       openGlModels.openglModels[i].draw_model();
+      openGlModels.openglModels[i].get_vertices();
+
+      movement.move(angle, x, y, bounds);
     };
-    rotation.rotate_z(angle);
+    
     window.renderOpenGL();
   }
   window.destroyWindow();

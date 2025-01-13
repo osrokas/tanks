@@ -15,7 +15,7 @@ ext_modules = [
             "core/KeyboardEvents.cpp",
             "core/stb_image.cpp",
             r"C:/CLibs/glad/src/glad.c",
-            "core/Rotate.cpp",
+            "core/Transformations.cpp",
         ],  # source file
         include_dirs=[
             r"C:/dev/SDL2 VC/SDL2/include",
@@ -47,7 +47,7 @@ setup(
         "core/Models.h",
         "core/Texture.h",
         "core/Object.h",
-        "core/Rotate.h"
+        "core/Transformations.h",
     ],
     version="0.2",
     ext_modules=ext_modules,
