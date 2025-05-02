@@ -39,10 +39,9 @@ class ShaderProgram{
   public:
     unsigned int vertexShader;
     unsigned int fragmentShader;
+    unsigned int shaderProgram;
     ShaderProgram(unsigned int vShader, unsigned int fShader);
     void create();
     void useShader();
-
-  private:
-    unsigned int shaderProgram;
+    unsigned int getShaderProgram();
 };

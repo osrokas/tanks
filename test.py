@@ -12,21 +12,22 @@ import sdltest
 # tank3 = sdltest.Sprite(r"C:\dev\tanks\asssets\enemy_tank.png", 20, 20, 50, 50, 0)
 # tank4 = sdltest.Sprite(r"C:\dev\tanks\asssets\enemy_tank.png", 20, 20, 200, 100, 0)
 
-coord1 = sdltest.Sprite(0.5, 0.2, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0)
-coord2 = sdltest.Sprite(0.5, 0.3, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0)
-coord3 = sdltest.Sprite(0.3, 0.3, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0)
-coord4 = sdltest.Sprite(0.3, 0.2, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0)
+coord1 = sdltest.Sprite(-0.1, -0.3, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0)
+coord2 = sdltest.Sprite(0.1, -0.3, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0)
+coord3 = sdltest.Sprite(0.1, 0.3, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0)
+coord4 = sdltest.Sprite(-0.1, 0.3, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0)
 
 indecies = [0, 1, 3, 1, 2, 3]
 
-coord5 = sdltest.Sprite(-0.5, -0.2, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0)
-coord6 = sdltest.Sprite(-0.5, -0.3, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0)
-coord7 = sdltest.Sprite(-0.3, -0.3, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0)
-coord8 = sdltest.Sprite(-0.3, -0.2, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0)
+coord5 = sdltest.Sprite(-0.5, -0.5, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0)
+coord6 = sdltest.Sprite(-0.4, -0.5, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0)
+coord7 = sdltest.Sprite(-0.4, -0.4, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0)
+coord8 = sdltest.Sprite(-0.5, -0.4, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0)
 
 indecies2 = [0, 1, 3, 1, 2, 3]
 
-vertex_shader_path = "C:\\dev\\tanks\\shaders\\v_shader.vert"
+vertex_shader_path = "C:\\dev\\tanks\\shaders\\v_rotate_shader.vert"
+vertex_shader_path2 = "C:\\dev\\tanks\\shaders\\v_shader.vert"
 fragment_shader_path = "C:\\dev\\tanks\\shaders\\f_shader.vert"
 texture_path = "C:\\dev\\tanks\\asssets\\tank.JPG"
 
@@ -38,20 +39,18 @@ tank_object = sdltest.Object(
     indecies,
 )
 
-texture_path2 = "C:\\dev\\tanks\\asssets\\back.jpg"
-
 tank_object2 = sdltest.Object(
-    vertex_shader_path,
+    vertex_shader_path2,
     fragment_shader_path,
-    texture_path2,
+    texture_path,
     [coord5, coord6, coord7, coord8],
     indecies2,
 )
 
-# tank_object.sprites = [coord1, coord2, coord3, coord4]
-# tank_object.indecies = indecies
 
-tanks = [tank_object, tank_object2]
+tanks = [
+    tank_object, tank_object2
+]
 
 
 sdltest.run(False, tanks)
