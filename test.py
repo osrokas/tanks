@@ -48,7 +48,9 @@ tank_object2 = sdltest.Object(
 )
 
 
-tanks = [tank_object, tank_object2]
+tanks = [
+    tank_object, tank_object2
+]
 
 
 sdltest.run(False, tanks)

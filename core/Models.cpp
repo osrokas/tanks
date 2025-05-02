@@ -3,6 +3,7 @@
 #include "Geometry.h"
 #include "Shaders.h"
 
+
 BaseModel::BaseModel(std::string vShaderPath, std::string fShaderPath,
                      std::string tPath)
     : vertexShaderPath(vShaderPath.c_str()), fragmentShaderPath(fShaderPath.c_str()),
@@ -53,7 +54,6 @@ void BaseModel::createSprite(){
 void BaseModel::get_vertices() { 
   // Get vertices from geometry object
 
-  std::cout << geomObject.vertices[0] << std::endl;
 };
 
 unsigned int BaseModel::getShaderProgram(){

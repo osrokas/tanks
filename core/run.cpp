@@ -82,7 +82,7 @@ int run(bool wireframe, std::vector<Object> objects) {
     glClear(GL_COLOR_BUFFER_BIT);
     for (int i = 0; i < openGlModels.openglModels.size(); i++) {
       openGlModels.openglModels[i].draw_model();
-      openGlModels.openglModels[i].get_vertices();
+      std::cout << x << std::endl;
 
       movement.move(angle, x, y, bounds);
     };
