@@ -12,7 +12,7 @@
 #include <SDL2/SDL_image.h>
 
 
-int run(bool wireframe, std::vector<Object> objects) {
+int run(bool wireframe, std::vector<Object> objects, std::vector<Object> enemies) {
 
   // Get the objects from the vector
       // Variable declarations
@@ -24,8 +24,13 @@ int run(bool wireframe, std::vector<Object> objects) {
 
   running = window.initalize();
 
+  // Define user input models
   Objects openGlModels;
+  // Define enemies models
+  Objects enemiesModels;
+
   unsigned int rotationShader;
+  unsigned int enemyShader;
 
   for (int i = 0; i < objects.size(); i++) {
     // Dereference the pointer to get the value
@@ -47,13 +52,39 @@ int run(bool wireframe, std::vector<Object> objects) {
     openGlModels.openglModels.push_back(object1);
   };
 
+  for (int i = 0; i < enemies.size(); i++) {
+    // Dereference the pointer to get the value
+    BaseModel enemy(enemies[i].vertexShaderPath,
+                      enemies[i].fragmentShaderPath,
+                      enemies[i].wallTexturePath1);
+
+    // Dereference the pointer to get the value
+    for (int j = 0; j < enemies[i].spritesVector.size(); j++) {
+      enemy.addVector(enemies[i].spritesVector[j]);
+    }
+
+    for (int j = 0; j < enemies[i].indecies.size(); j++) {
+      enemy.addIndex(enemies[i].indecies[j]);
+    }
+    enemy.createSprite();
+    enemy.create_model();
+    enemiesModels.openglModels.push_back(enemy);
+  };
+
   rotationShader = openGlModels.openglModels[0].getShaderProgram();
 
+  enemyShader = enemiesModels.openglModels[0].getShaderProgram();
+  
+  Transformation enemyMovement(enemyShader);
   Transformation movement(rotationShader);
 
   float angle = 0.0f;
   float x = 0.0f;
   float y = 0.0f;
+
+  float enemyAngle = 0.2f;
+  float enemyX = 0.1f;
+  float enemyY = 0.4f;
 
   Extent bounds = {0.8f, 0.8f, -0.8f, -0.8f};
   while (running) {
@@ -82,9 +113,14 @@ int run(bool wireframe, std::vector<Object> objects) {
     glClear(GL_COLOR_BUFFER_BIT);
     for (int i = 0; i < openGlModels.openglModels.size(); i++) {
       openGlModels.openglModels[i].draw_model();
-      std::cout << x << std::endl;
 
       movement.move(angle, x, y, bounds);
+    };
+
+    for (int i=0; i < enemiesModels.openglModels.size(); i++) {
+      enemiesModels.openglModels[i].draw_model();
+      std::cout << enemyX << std::endl;
+      enemyMovement.move(enemyAngle, enemyX, enemyY, bounds);
     };
     
     window.renderOpenGL();
