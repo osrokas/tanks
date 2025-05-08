@@ -47,13 +47,20 @@ tank_object2 = sdltest.Object(
     indecies2,
 )
 
+tank_object3 = sdltest.Object(
+    vertex_shader_path2,
+    fragment_shader_path,
+    texture_path,
+    [coord5, coord6, coord7, coord8],
+    indecies2,
+)
+
 
 tanks = [
     tank_object]
 
-enemies = [
-    tank_object2,
-]
+enemies = [tank_object2, tank_object3]
+
 
 
 sdltest.run(False, tanks, enemies)

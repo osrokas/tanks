@@ -12,3 +12,4 @@ struct Sprite {
   float tx1;
   float tx2;
 };
+

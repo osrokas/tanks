@@ -16,6 +16,7 @@ ext_modules = [
             "core/stb_image.cpp",
             r"C:/CLibs/glad/src/glad.c",
             "core/Transformations.cpp",
+            "core/Object.cpp",
         ],  # source file
         include_dirs=[
             r"C:/dev/SDL2 VC/SDL2/include",
