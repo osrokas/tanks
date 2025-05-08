@@ -3,6 +3,7 @@
 #include <string>
 #include <glad/glad.h>
 #include "Models.h"
+#include "Transformations.h"
 
 struct Object {
   std::string vertexShaderPath;
@@ -12,10 +13,13 @@ struct Object {
   std::vector<unsigned int> indecies;
 };
 
-struct ObjectsList {
-  std::vector<Object> ojbectsArray;
-};
+class Objects {
+  std::vector<Object> objects;
 
-struct Objects {
-    std::vector<BaseModel> openglModels;
+public:
+  Objects(std::vector<struct Object> ob);
+  void add_data();
+  void draw(float angle, float startX, float startY, Extent bounds);
+
+  std::vector<BaseModel> openglModels;
 };

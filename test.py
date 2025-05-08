@@ -27,7 +27,7 @@ coord8 = sdltest.Sprite(-0.5, -0.4, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0)
 indecies2 = [0, 1, 3, 1, 2, 3]
 
 vertex_shader_path = "C:\\dev\\tanks\\shaders\\v_rotate_shader.vert"
-vertex_shader_path2 = "C:\\dev\\tanks\\shaders\\v_shader.vert"
+vertex_shader_path2 = "C:\\dev\\tanks\\shaders\\v_rotate_shader.vert"
 fragment_shader_path = "C:\\dev\\tanks\\shaders\\f_shader.vert"
 texture_path = "C:\\dev\\tanks\\asssets\\tank.JPG"
 
@@ -47,10 +47,20 @@ tank_object2 = sdltest.Object(
     indecies2,
 )
 
+tank_object3 = sdltest.Object(
+    vertex_shader_path2,
+    fragment_shader_path,
+    texture_path,
+    [coord5, coord6, coord7, coord8],
+    indecies2,
+)
+
 
 tanks = [
-    tank_object, tank_object2
-]
+    tank_object]
+
+enemies = [tank_object2, tank_object3]
 
 
-sdltest.run(False, tanks)
+
+sdltest.run(False, tanks, enemies)

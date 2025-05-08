@@ -1,21 +1,17 @@
-// For proper sdl initialization
+#include "Transformations.h"
 #include <iostream>
 #include <ostream>
 #include <vector>
-  // For proper sdl initialization
-#define SDL_MAIN_HANDLED
+#define SDL_MAIN_HANDLED // For proper sdl initialization
 #include "KeyboardEvents.h"
 #include "Object.h"
-#include "Transformations.h"
 #include "Window.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
 
-int run(bool wireframe, std::vector<Object> objects) {
+int run(bool wireframe, std::vector<Object> objects, std::vector<Object> enemies) {
 
-  // Get the objects from the vector
-      // Variable declarations
   bool running; // Running state
   SDL_Event event; // initialize sdl events
   
@@ -24,71 +20,52 @@ int run(bool wireframe, std::vector<Object> objects) {
 
   running = window.initalize();
 
-  Objects openGlModels;
-  unsigned int rotationShader;
+  // Create players object
+  Objects players(objects);
+  Objects enmiesObjects(enemies);
 
-  for (int i = 0; i < objects.size(); i++) {
-    // Dereference the pointer to get the value
-    BaseModel object1(objects[i].vertexShaderPath,
-                      objects[i].fragmentShaderPath,
-                      objects[i].wallTexturePath1);
+  // Add data to object
+  players.add_data();
+  enmiesObjects.add_data();
 
-    // Dereference the pointer to get the value
-    for (int j = 0; j < objects[i].spritesVector.size(); j++) {
-      object1.addVector(objects[i].spritesVector[j]);
-
-    }
-
-    for (int j = 0; j <objects[i].indecies.size(); j++) {
-      object1.addIndex(objects[i].indecies[j]);
-    }
-    object1.createSprite();
-    object1.create_model();
-    openGlModels.openglModels.push_back(object1);
-  };
-
-  rotationShader = openGlModels.openglModels[0].getShaderProgram();
-
-  Transformation movement(rotationShader);
-
+  // Set initial coordinates for player
   float angle = 0.0f;
   float x = 0.0f;
   float y = 0.0f;
 
-  Extent bounds = {0.8f, 0.8f, -0.8f, -0.8f};
+  Extent bounds = {0.8f, 0.8f, -0.8f, -0.8f}; // Game loop
   while (running) {
-    while (SDL_PollEvent(&event)) { // Pointing to memory address
+    // Handling inputs
+    while (SDL_PollEvent(&event)) { 
+      // Quit
       if (event.type == SDL_QUIT || event.key.keysym.sym == SDLK_ESCAPE) {
         running = false;
       }
-
+      // Player movement
       if (event.type == SDL_KEYDOWN) {
         keyboardMovement(event, &angle, &x, &y);
         std::cout << angle << std::endl;
       }
-      
-
+      // Resizing window
       if (event.type == SDL_WINDOWEVENT) {
         if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
-
           // Update OpenGL viewport
         }
       }
-    }
-
-    // TODO  Create object coordinates limits and after shader transformation 
-    // update object coordinates
+    
+    // Updating game view 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
-    for (int i = 0; i < openGlModels.openglModels.size(); i++) {
-      openGlModels.openglModels[i].draw_model();
-      std::cout << x << std::endl;
 
-      movement.move(angle, x, y, bounds);
-    };
+    // Drawing objects on the screen
+    players.draw(angle, x, y, bounds);
+    enmiesObjects.draw(angle, 0.1f, 0.4f, bounds);
     
+    // Render updates
     window.renderOpenGL();
+    }
   }
+  // Destroy window
   window.destroyWindow();
   return 0;
 }
