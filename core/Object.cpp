@@ -23,12 +23,26 @@ void Objects::add_data() {
     openglModels.push_back(object);
   }
 };
-void Objects::draw(float angle, float startX, float startY, Extent bounds) {
+
+void Objects::set_positions(){
+  float angle = 0.0f;
+  float startX = 0.0f;
+  float startY = 0.0f;
+  Extent bounds = {0.8f, 0.8f, -0.8f, -0.8f};
+  for (int i = 0; i < openglModels.size(); i++) {
+    unsigned int shader_id = openglModels[i].getShaderProgram();
+    Transformation tranform(shader_id);
+    transformations.push_back(tranform);
+    tranform.move(angle, startX, startY, bounds);
+  };
+}
+
+void Objects::draw(float angle, float x, float y, Extent extent) {
 
   for (int i = 0; i < openglModels.size(); i++) {
+    transformations[i].move(angle, x,y ,extent);
     openglModels[i].draw_model();
-    unsigned int shader = openglModels[i].getShaderProgram();
-    Transformation movement(shader);
-    movement.move(angle, startX, startY, bounds);
     };
 };
+
+

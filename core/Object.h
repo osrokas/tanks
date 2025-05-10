@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
-#include <glad/glad.h>
+#include "glad/glad.h"
 #include "Models.h"
 #include "Transformations.h"
 
@@ -19,7 +19,12 @@ class Objects {
 public:
   Objects(std::vector<struct Object> ob);
   void add_data();
-  void draw(float angle, float startX, float startY, Extent bounds);
+  void set_positions();
+  void draw(float angle, float x, float y, Extent extent);
 
   std::vector<BaseModel> openglModels;
+  std::vector<Transformation> transformations;
 };
+
+// create seperates Classes for Players and Enemies
+// Player should have different draw_objects implemintation

@@ -2,7 +2,7 @@
 #include "Geometry.h"
 #include "stb_image.h"
 #include <fstream>
-#include <glad/glad.h>
+#include "glad/glad.h"
 #include <iostream>
 #include <sstream>
 #include <vector>

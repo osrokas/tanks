@@ -2,9 +2,9 @@
 #include <cstddef>
 #define SDL_MAIN_HANDLED
 #include "Sprites.h"
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <glad/glad.h>
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_image.h"
+#include "glad/glad.h"
 #include <iostream>
 #include <vector>
 
