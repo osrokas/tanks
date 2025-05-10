@@ -1,8 +1,3 @@
-#include "core/Object.h"
-#include "core/Sprites.h"
-#include <memory>
-#include <string>
-#include <vector>
 #define SDL_MAIN_HANDLED
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
