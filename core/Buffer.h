@@ -1,7 +1,7 @@
 #pragma once
 #include "Geometry.h"
 #include <fstream>
-#include <glad/glad.h>
+#include "glad/glad.h"
 #include <iostream>
 #include <sstream>
 
@@ -18,3 +18,4 @@ private:
   GLuint VAO;
   GLuint EBO;
 };
+

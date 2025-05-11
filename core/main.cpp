@@ -1,28 +1,53 @@
 // For proper sdl initialization
-#include "Rotate.h"
+#include "SDL2/SDL_keycode.h"
+#include "Transformations.h"
 #include <vector>
 #define SDL_MAIN_HANDLED
 #include "KeyboardEvents.h"
-#include "Models.h"
 #include "Object.h"
-#include "Rotate.h"
 #include "Sprites.h"
 #include "Window.h"
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include "glad/glad.h"
 
 int main() {
   const char *vertexShaderPath("C:\\dev\\tanks\\shaders\\v_rotate_shader.vert");
-  const char *vertexShaderPath2("C:\\dev\\tanks\\shaders\\v_shader.vert");
   const char *fragmentShaderPath("C:\\dev\\tanks\\shaders\\f_shader.vert");
   const char *wallTexturePath1 = "C:\\dev\\tanks\\asssets\\tank.JPG";
+  const char *txt = "C:\\dev\\tanks\\asssets\\wall.jpg";
 
-  std::vector<Object> objects;
+  std::vector<Object>objects;
+  std::vector<Object>enemies;
 
   Sprite sprite1 = {-0.1, -0.3, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0};
   Sprite sprite2 = {0.1, -0.3, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0};
   Sprite sprite3 = {0.1, 0.3, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0};
   Sprite sprite4 = {-0.1, 0.3, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0};
+
+  // Sprite sprite5 = {-0.1, -0.3, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0};
+  // Sprite sprite6 = {0.1, -0.3, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0};
+  // Sprite sprite7 = {0.1, 0.3, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0};
+  // Sprite sprite8 = {-0.1, 0.3, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0};
+
+  Sprite sprite5 = {-0.5, -0.5, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0};
+  Sprite sprite6 = {-0.4, -0.5, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0};
+  Sprite sprite7 = {-0.4, -0.4, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0};
+  Sprite sprite8 = {-0.5, -0.4, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0};
+
+  // Creating indecies for the sprites
+
+  std::vector<unsigned int> indecies2;
+  indecies2.push_back(0);
+  indecies2.push_back(1);
+  indecies2.push_back(3);
+  indecies2.push_back(1);
+  indecies2.push_back(2);
+  indecies2.push_back(3);
+
+  std::vector<Sprite> spritesVector2;
+  spritesVector2.push_back(sprite5);
+  spritesVector2.push_back(sprite6);
+  spritesVector2.push_back(sprite7);
+  spritesVector2.push_back(sprite8);
 
   std::vector<unsigned int> indecies;
   indecies.push_back(0);
@@ -39,104 +64,76 @@ int main() {
   spritesVector.push_back(sprite3);
   spritesVector.push_back(sprite4);
 
-  Sprite sprite5 = {-0.5, -0.5, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0};
-  Sprite sprite6 = {-0.4, -0.5, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0};
-  Sprite sprite7 = {-0.4, -0.4, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0};
-  Sprite sprite8 = {-0.5, -0.4, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0};
+  Object object1 = {vertexShaderPath, fragmentShaderPath, wallTexturePath1,
+                    spritesVector, indecies};
 
-  std::vector<unsigned int> indecies2;
-  indecies2.push_back(0);
-  indecies2.push_back(1);
-  indecies2.push_back(3);
-  indecies2.push_back(1);
-  indecies2.push_back(2);
-  indecies2.push_back(3);
+  // Creating object
+  Object object2 = {vertexShaderPath, fragmentShaderPath, txt,
+                    spritesVector2, indecies2};
 
+  objects.push_back(object1);
+  enemies.push_back(object2);
 
-  // Add sprites into vector
-  std::vector<Sprite> spritesVector2;
-  spritesVector2.push_back(sprite5);
-  spritesVector2.push_back(sprite6);
-  spritesVector2.push_back(sprite7);
-  spritesVector2.push_back(sprite8);
-
-  Object objectTank = {
-    vertexShaderPath, fragmentShaderPath, wallTexturePath1, spritesVector, indecies
-  };
-
-  Object objectTank2 = {vertexShaderPath2, fragmentShaderPath, wallTexturePath1,
-                        spritesVector2, indecies2};
-
-  objects.push_back(objectTank);
-  objects.push_back(objectTank2);
-
-  ObjectsList objArray;
-  objArray.ojbectsArray = objects;
-
-  bool running; // Running state
+  bool running;    // Running state
   SDL_Event event; // initialize sdl events
 
   // Creating window
-  SDL window("Tanks", 1200, 800);
-  
+  SDL window("Tanks", 600, 600);
+
   running = window.initalize();
 
-  Objects openGlModels;
 
-  unsigned int rotationShader;
 
-  for (int i = 0; i < objects.size(); i++) {
-    // Dereference the pointer to get the value
-    BaseModel object1(objects[i].vertexShaderPath,
-                      objects[i].fragmentShaderPath,
-                      objects[i].wallTexturePath1);
+  // Create players object
+  Players players(objects);
 
-    // Dereference the pointer to get the value
-    for (int j = 0; j < objects[i].spritesVector.size(); j++) {
-      object1.addVector(objects[i].spritesVector[j]);
-    }
+  Enemies enemiesObjects(enemies);
 
-    for (int j = 0; j < objects[i].indecies.size(); j++) {
-      object1.addIndex(objects[i].indecies[j]);
-    }
-    object1.createSprite();
-    object1.create_model();
-    openGlModels.openglModels.push_back(object1);
-  };
+      // Add data to object
+  players.add_data();
+  enemiesObjects.add_data();
+  // enemies.add_data();
+  players.set_positions();
+  enemiesObjects.set_positions();
 
-  rotationShader = openGlModels.openglModels[0].getShaderProgram();
-  Rotate rotation(rotationShader);
-  std::cout << "Shader program: " << rotationShader << std::endl;
-
+      // Set initial coordinates for player
   float angle = 0.0f;
   float x = 0.0f;
   float y = 0.0f;
 
+
+  Extent bounds = {0.8f, 0.8f, -0.8f, -0.8f}; // Game loop
   while (running) {
-    while (SDL_PollEvent(&event)) { // Pointing to memory address
+
+    // Handling inputs
+    while (SDL_PollEvent(&event)) {
+      // Quit
       if (event.type == SDL_QUIT || event.key.keysym.sym == SDLK_ESCAPE) {
         running = false;
       }
-
+      // Player movement
       if (event.type == SDL_KEYDOWN) {
         keyboardMovement(event, &angle, &x, &y);
       }
-
+      // Resizing window
       if (event.type == SDL_WINDOWEVENT) {
         if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
+          // Update OpenGL viewport
         }
       }
-        }
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-        for (int i = 0; i < openGlModels.openglModels.size(); i++){
-          openGlModels.openglModels[i].draw_model();
-          // rotationShader = openGlModels.openglModels[0].getShaderProgram();
-          // Rotate rotation(rotationShader);
-        };
-        rotation.rotate_z(angle, x, y);
 
-        window.renderOpenGL();
+      // Render updates
+      
+    }
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+    // Draw objects
+    players.draw(angle, x, y, bounds);
+    enemiesObjects.draw();
+    window.renderOpenGL();
+    // Updating game view
   }
+  // Destroy window
   window.destroyWindow();
+  return 0;
 }

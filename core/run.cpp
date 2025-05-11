@@ -6,8 +6,6 @@
 #include "KeyboardEvents.h"
 #include "Object.h"
 #include "Window.h"
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 
 
 int run(bool wireframe, std::vector<Object> objects, std::vector<Object> enemies) {
@@ -21,8 +19,8 @@ int run(bool wireframe, std::vector<Object> objects, std::vector<Object> enemies
   running = window.initalize();
 
   // Create players object
-  Objects players(objects);
-  Objects enmiesObjects(enemies);
+  Players players(objects);
+  Players enmiesObjects(enemies);
 
   // Add data to object
   players.add_data();
