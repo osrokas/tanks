@@ -23,15 +23,15 @@ int main() {
   Sprite sprite3 = {0.1, 0.3, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0};
   Sprite sprite4 = {-0.1, 0.3, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0};
 
-  // Sprite sprite5 = {-0.1, -0.3, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0};
-  // Sprite sprite6 = {0.1, -0.3, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0};
-  // Sprite sprite7 = {0.1, 0.3, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0};
-  // Sprite sprite8 = {-0.1, 0.3, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0};
+  Sprite sprite5 = {-0.1, -0.3, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0};
+  Sprite sprite6 = {0.1, -0.3, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0};
+  Sprite sprite7 = {0.1, 0.3, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0};
+  Sprite sprite8 = {-0.1, 0.3, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0};
 
-  Sprite sprite5 = {-0.5, -0.5, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0};
-  Sprite sprite6 = {-0.4, -0.5, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0};
-  Sprite sprite7 = {-0.4, -0.4, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0};
-  Sprite sprite8 = {-0.5, -0.4, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0};
+  // Sprite sprite5 = {-0.5, -0.5, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0};
+  // Sprite sprite6 = {-0.4, -0.5, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0};
+  // Sprite sprite7 = {-0.4, -0.4, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0};
+  // Sprite sprite8 = {-0.5, -0.4, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0};
 
   // Creating indecies for the sprites
 
@@ -89,14 +89,16 @@ int main() {
 
   Enemies enemiesObjects(enemies);
 
-      // Add data to object
+  // Add data to object
   players.add_data();
   enemiesObjects.add_data();
-  // enemies.add_data();
+
+  // Set initial positions
+  // TODO Create initial values as it defined in Sprite
   players.set_positions();
   enemiesObjects.set_positions();
 
-      // Set initial coordinates for player
+  // Set initial coordinates for player
   float angle = 0.0f;
   float x = 0.0f;
   float y = 0.0f;

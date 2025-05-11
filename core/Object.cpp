@@ -42,6 +42,7 @@ Players::Players(std::vector<Object> ob) : Objects(ob) {}
 
 void Players::draw(){};
 
+// Implement when extent reaced no increasing x and y values.
 void Players::draw(float angle, float x, float y, Extent extent) {
 
   for (int i = 0; i < openglModels.size(); i++) {
@@ -51,13 +52,38 @@ void Players::draw(float angle, float x, float y, Extent extent) {
 };
 
 Enemies::Enemies(std::vector<Object> ob) : Objects(ob) {}
-
+// Implement when extent reaced no increasing x and y values.
 void Enemies::draw() {
   for (int i = 0; i < openglModels.size(); i++) {
     transformations[i].move(angle, startX, startY, bounds);
     openglModels[i].draw_model();
   };
-  startX = startX +0.001;
-  startY = startY +0.001;
+  random_state();
+  movement();
   std::cout << startX << std::endl;
+};
+
+void Enemies::random_state(){
+  if (dir_count > 200) {
+    state = 0 + std::rand() % 4;
+    dir_count = 0;
+  }
+  else {
+    dir_count +=1;
+  }
+};
+
+void Enemies::movement(){
+  if (state == 0){
+    startX += speed;
+  }
+  else if (state == 1){
+    startX -= speed;
+  } else if (state == 2) {
+    startY += speed;
+  } else if (state == 3) {
+    startY -= speed;
+  }
+  else {
+  };
 };

@@ -31,6 +31,7 @@ public:
     float startX=0.0f;
     float startY=0.0f;
     Extent bounds = {0.8f, 0.8f, -0.8f, -0.8f};
+    float speed;
 };
 
 // Define child class
@@ -46,4 +47,11 @@ class Enemies : public Objects {
   public:
       Enemies(std::vector<struct Object> ob);
       void draw() override;
+
+    protected:
+      int state = 0;
+      int dir_count = 0;
+      void movement();
+      void random_state();
+      float speed = 0.001f;
 };
