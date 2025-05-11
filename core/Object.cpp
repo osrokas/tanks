@@ -25,10 +25,6 @@ void Objects::add_data() {
 };
 
 void Objects::set_positions(){
-  float angle = 0.0f;
-  float startX = 0.0f;
-  float startY = 0.0f;
-  Extent bounds = {0.8f, 0.8f, -0.8f, -0.8f};
   for (int i = 0; i < openglModels.size(); i++) {
     unsigned int shader_id = openglModels[i].getShaderProgram();
     Transformation tranform(shader_id);
@@ -37,7 +33,16 @@ void Objects::set_positions(){
   };
 }
 
-void Objects::draw(float angle, float x, float y, Extent extent) {
+void Objects::draw(){
+  std::cout << "DO NOTHING" << std::endl;
+}
+
+
+Players::Players(std::vector<Object> ob) : Objects(ob) {}
+
+void Players::draw(){};
+
+void Players::draw(float angle, float x, float y, Extent extent) {
 
   for (int i = 0; i < openglModels.size(); i++) {
     transformations[i].move(angle, x,y ,extent);
@@ -45,4 +50,14 @@ void Objects::draw(float angle, float x, float y, Extent extent) {
     };
 };
 
+Enemies::Enemies(std::vector<Object> ob) : Objects(ob) {}
 
+void Enemies::draw() {
+  for (int i = 0; i < openglModels.size(); i++) {
+    transformations[i].move(angle, startX, startY, bounds);
+    openglModels[i].draw_model();
+  };
+  startX = startX +0.001;
+  startY = startY +0.001;
+  std::cout << startX << std::endl;
+};

@@ -82,10 +82,12 @@ int main() {
 
   running = window.initalize();
 
-  // Create players object
-  Objects players(objects);
 
-  Objects enemiesObjects(enemies);
+
+  // Create players object
+  Players players(objects);
+
+  Enemies enemiesObjects(enemies);
 
       // Add data to object
   players.add_data();
@@ -102,6 +104,7 @@ int main() {
 
   Extent bounds = {0.8f, 0.8f, -0.8f, -0.8f}; // Game loop
   while (running) {
+
     // Handling inputs
     while (SDL_PollEvent(&event)) {
       // Quit
@@ -119,17 +122,16 @@ int main() {
         }
       }
 
-      // Updating game view
-      glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-      glClear(GL_COLOR_BUFFER_BIT);
-      
-      // Draw objects
-      players.draw(angle, x, y, bounds);
-      enemiesObjects.draw(angle, x, y, bounds);
-
       // Render updates
-      window.renderOpenGL();
+      
     }
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+    // Draw objects
+    players.draw(angle, x, y, bounds);
+    enemiesObjects.draw();
+    window.renderOpenGL();
+    // Updating game view
   }
   // Destroy window
   window.destroyWindow();
