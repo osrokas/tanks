@@ -2,6 +2,7 @@
 #include "Buffer.h"
 #include "Geometry.h"
 #include "Shaders.h"
+// #include "Transformations.h"
 
 
 BaseModel::BaseModel(std::string vShaderPath, std::string fShaderPath,
@@ -9,7 +10,7 @@ BaseModel::BaseModel(std::string vShaderPath, std::string fShaderPath,
     : vertexShaderPath(vShaderPath.c_str()), fragmentShaderPath(fShaderPath.c_str()),
       texturePath(tPath.c_str()), vertexShader(vShaderPath.c_str()),
       fragmentShader(fShaderPath.c_str()), texture(tPath.c_str()),
-      shaderProgram(nullptr), buffering(nullptr){};
+      shaderProgram(nullptr), buffering(nullptr), tranformormation(nullptr){};
 
 void BaseModel::create_model(){
   unsigned int vShader;
@@ -25,10 +26,11 @@ void BaseModel::create_model(){
   texture.load_texture();
 };
 
-void BaseModel::draw_model(){
-    texture.draw_texture();
-    shaderProgram->useShader();
-    buffering->drawShader();
+void BaseModel::draw_model(float angle, float x, float y, Extent bounds) {
+  texture.draw_texture();
+  shaderProgram->useShader();
+  buffering->drawShader();
+  tranformormation->move(angle, x, y, bounds);
 };
 
 void BaseModel::addVector(Sprite &spriteVector) {
@@ -51,11 +53,12 @@ void BaseModel::createSprite(){
   geomObject.vertices = vertices;
 };
 
-void BaseModel::get_vertices() { 
-  // Get vertices from geometry object
-
+unsigned int BaseModel::getShaderProgram() {
+  return shaderProgram->getShaderProgram();
 };
 
-unsigned int BaseModel::getShaderProgram(){
-  return shaderProgram->getShaderProgram();
+void BaseModel::set_positions(){
+  unsigned int shader_id = shaderProgram->getShaderProgram();
+  tranformormation = new Transformation(shader_id);
+  tranformormation->move(angle, startX, startY, bounds);
 };

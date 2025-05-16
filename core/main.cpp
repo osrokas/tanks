@@ -1,10 +1,11 @@
 // For proper sdl initialization
+
 #include "SDL2/SDL_keycode.h"
 #include "Transformations.h"
 #include <vector>
 #define SDL_MAIN_HANDLED
 #include "KeyboardEvents.h"
-#include "Object.h"
+#include "Models.h"
 #include "Sprites.h"
 #include "Window.h"
 #include "glad/glad.h"
@@ -15,8 +16,8 @@ int main() {
   const char *wallTexturePath1 = "C:\\dev\\tanks\\asssets\\tank.JPG";
   const char *txt = "C:\\dev\\tanks\\asssets\\wall.jpg";
 
-  std::vector<Object>objects;
-  std::vector<Object>enemies;
+  // std::vector<Object>objects;
+  // std::vector<Object>enemies;
 
   Sprite sprite1 = {-0.1, -0.3, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0};
   Sprite sprite2 = {0.1, -0.3, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0};
@@ -28,26 +29,34 @@ int main() {
   Sprite sprite7 = {0.1, 0.3, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0};
   Sprite sprite8 = {-0.1, 0.3, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0};
 
-  // Sprite sprite5 = {-0.5, -0.5, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0};
-  // Sprite sprite6 = {-0.4, -0.5, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0};
-  // Sprite sprite7 = {-0.4, -0.4, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0};
-  // Sprite sprite8 = {-0.5, -0.4, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0};
+  Sprite sprite9 = {-0.5, -0.5, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0};
+  Sprite sprite10 = {-0.4, -0.5, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0};
+  Sprite sprite11 = {-0.4, -0.4, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0};
+  Sprite sprite12 = {-0.5, -0.4, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0};
 
   // Creating indecies for the sprites
 
-  std::vector<unsigned int> indecies2;
-  indecies2.push_back(0);
-  indecies2.push_back(1);
-  indecies2.push_back(3);
-  indecies2.push_back(1);
-  indecies2.push_back(2);
-  indecies2.push_back(3);
+  // std::vector<unsigned int> indecies2;
+  // indecies2.push_back(0);
+  // indecies2.push_back(1);
+  // indecies2.push_back(3);
+  // indecies2.push_back(1);
+  // indecies2.push_back(2);
+  // indecies2.push_back(3);
 
-  std::vector<Sprite> spritesVector2;
-  spritesVector2.push_back(sprite5);
-  spritesVector2.push_back(sprite6);
-  spritesVector2.push_back(sprite7);
-  spritesVector2.push_back(sprite8);
+  // std::vector<Sprite> spritesVector2;
+  // spritesVector2.push_back(sprite5);
+  // spritesVector2.push_back(sprite6);
+  // spritesVector2.push_back(sprite7);
+  // spritesVector2.push_back(sprite8);
+
+
+
+  std::vector<Sprite> spritesVector;
+  spritesVector.push_back(sprite1);
+  spritesVector.push_back(sprite2);
+  spritesVector.push_back(sprite3);
+  spritesVector.push_back(sprite4);
 
   std::vector<unsigned int> indecies;
   indecies.push_back(0);
@@ -58,23 +67,29 @@ int main() {
   indecies.push_back(3);
 
   // Add sprites into vector
-  std::vector<Sprite> spritesVector;
-  spritesVector.push_back(sprite1);
-  spritesVector.push_back(sprite2);
-  spritesVector.push_back(sprite3);
-  spritesVector.push_back(sprite4);
+  // std::vector<Sprite> spritesVector3;
+  // spritesVector3.push_back(sprite9);
+  // spritesVector3.push_back(sprite10);
+  // spritesVector3.push_back(sprite11);
+  // spritesVector3.push_back(sprite12);
 
-  Object object1 = {vertexShaderPath, fragmentShaderPath, wallTexturePath1,
-                    spritesVector, indecies};
 
-  // Creating object
-  Object object2 = {vertexShaderPath, fragmentShaderPath, txt,
-                    spritesVector2, indecies2};
 
-  objects.push_back(object1);
-  enemies.push_back(object2);
 
-  bool running;    // Running state
+  // // Creating object
+  // Object object2 = {vertexShaderPath, fragmentShaderPath,
+  // wallTexturePath1,
+  //                   spritesVector2, indecies2};
+
+  // // Creating object
+  // Object object3 = {vertexShaderPath, fragmentShaderPath, txt,
+  // spritesVector3,
+  //                   indecies2};
+
+  // enemies.push_back(object1);
+  // enemies.push_back(object3);
+
+  bool running; // Running state
   SDL_Event event; // initialize sdl events
 
   // Creating window
@@ -82,29 +97,41 @@ int main() {
 
   running = window.initalize();
 
+  BaseModel object1 = {vertexShaderPath, fragmentShaderPath, wallTexturePath1};
 
+  for (int j = 0; j < spritesVector.size(); j++) {
+    object1.addVector(spritesVector[j]);
+  }
 
-  // Create players object
-  Players players(objects);
+  for (int j = 0; j < indecies.size(); j++) {
+    object1.addIndex(indecies[j]);
+  }
 
-  Enemies enemiesObjects(enemies);
+  object1.createSprite();
+  object1.create_model();
+  object1.set_positions();
+  
+  // // Create players object
+  // Players players(objects);
 
-  // Add data to object
-  players.add_data();
-  enemiesObjects.add_data();
+  // // Enemies enemiesObjects(enemies);
 
-  // Set initial positions
-  // TODO Create initial values as it defined in Sprite
-  players.set_positions();
-  enemiesObjects.set_positions();
+  // // Add data to object
+  // players.add_data();
+  // // enemiesObjects.add_data();
+
+  // // Set initial positions
+  // // TODO Create initial values as it defined in Sprite
+  // players.set_positions();
+  // enemiesObjects.set_positions();
 
   // Set initial coordinates for player
   float angle = 0.0f;
   float x = 0.0f;
   float y = 0.0f;
-
-
-  Extent bounds = {0.8f, 0.8f, -0.8f, -0.8f}; // Game loop
+  
+  Extent bounds = {0.8f, 0.8f, -0.8f, -0.8f};
+      // Game loop
   while (running) {
 
     // Handling inputs
@@ -130,8 +157,9 @@ int main() {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     // Draw objects
-    players.draw(angle, x, y, bounds);
-    enemiesObjects.draw();
+    // players.draw(angle, x, y, bounds);
+    // enemiesObjects.draw();
+    object1.draw_model(angle, x, y, bounds);
     window.renderOpenGL();
     // Updating game view
   }

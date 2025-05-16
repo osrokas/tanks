@@ -1,9 +1,10 @@
 #pragma once
 #include "Buffer.h"
-#include "Shaders.h"
-#include "Texture.h"
-#include "Sprites.h"
 #include "Geometry.h"
+#include "Shaders.h"
+#include "Sprites.h"
+#include "Texture.h"
+#include "Transformations.h"
 #include <cstddef>
 
 class BaseModel{
@@ -14,15 +15,14 @@ class BaseModel{
         BaseModel(std::string vShaderPath, std::string fShaderPath,
                   std::string tPath);
         void create_model();
-        void draw_model();
+        void draw_model(float angle, float x, float y, Extent bounds);
         void addVector(Sprite &spriteVector);
         void addIndex(unsigned int index);
         // Fix create sprite 
         // Error with creating geometry 
         void createSprite();
         unsigned int getShaderProgram();
-        void get_vertices();
-        
+        void set_positions();
 
       private:
         Shader vertexShader;
@@ -34,6 +34,14 @@ class BaseModel{
         std::vector<unsigned int> indecies;
         Buffer *buffering = NULL;
         Geometry geomObject;
+        Transformation* tranformormation = NULL; 
         unsigned int vShader;
         unsigned int fShader;
+
+      protected:
+        float angle = 0.0f;
+        float startX = 0.0f;
+        float startY = 0.0f;
+        Extent bounds = {0.8f, 0.8f, -0.8f, -0.8f};
+        float speed;
 };
