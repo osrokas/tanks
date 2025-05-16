@@ -36,20 +36,19 @@ int main() {
 
   // Creating indecies for the sprites
 
-  // std::vector<unsigned int> indecies2;
-  // indecies2.push_back(0);
-  // indecies2.push_back(1);
-  // indecies2.push_back(3);
-  // indecies2.push_back(1);
-  // indecies2.push_back(2);
-  // indecies2.push_back(3);
+  std::vector<unsigned int> indecies2;
+  indecies2.push_back(0);
+  indecies2.push_back(1);
+  indecies2.push_back(3);
+  indecies2.push_back(1);
+  indecies2.push_back(2);
+  indecies2.push_back(3);
 
-  // std::vector<Sprite> spritesVector2;
-  // spritesVector2.push_back(sprite5);
-  // spritesVector2.push_back(sprite6);
-  // spritesVector2.push_back(sprite7);
-  // spritesVector2.push_back(sprite8);
-
+  std::vector<Sprite> spritesVector2;
+  spritesVector2.push_back(sprite5);
+  spritesVector2.push_back(sprite6);
+  spritesVector2.push_back(sprite7);
+  spritesVector2.push_back(sprite8);
 
 
   std::vector<Sprite> spritesVector;
@@ -97,20 +96,15 @@ int main() {
 
   running = window.initalize();
 
-  BaseModel object1 = {vertexShaderPath, fragmentShaderPath, wallTexturePath1};
+  BaseModel object1 = {vertexShaderPath, fragmentShaderPath, wallTexturePath1,
+                       spritesVector, indecies};
 
-  for (int j = 0; j < spritesVector.size(); j++) {
-    object1.addVector(spritesVector[j]);
-  }
+  BaseModel object2 = {vertexShaderPath, fragmentShaderPath, wallTexturePath1,
+                       spritesVector2, indecies2};
 
-  for (int j = 0; j < indecies.size(); j++) {
-    object1.addIndex(indecies[j]);
-  }
 
-  object1.createSprite();
-  object1.create_model();
-  object1.set_positions();
-  
+  object1.create_object();
+  object2.create_object();
   // // Create players object
   // Players players(objects);
 
@@ -151,17 +145,18 @@ int main() {
         }
       }
 
-      // Render updates
+      
       
     }
+    // Render updates
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     // Draw objects
     // players.draw(angle, x, y, bounds);
     // enemiesObjects.draw();
     object1.draw_model(angle, x, y, bounds);
+    object2.draw_model(45, 0.0f, 0.0f, bounds);
     window.renderOpenGL();
-    // Updating game view
   }
   // Destroy window
   window.destroyWindow();
