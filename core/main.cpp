@@ -66,11 +66,11 @@ int main() {
   indecies.push_back(3);
 
   // Add sprites into vector
-  // std::vector<Sprite> spritesVector3;
-  // spritesVector3.push_back(sprite9);
-  // spritesVector3.push_back(sprite10);
-  // spritesVector3.push_back(sprite11);
-  // spritesVector3.push_back(sprite12);
+  std::vector<Sprite> spritesVector3;
+  spritesVector3.push_back(sprite9);
+  spritesVector3.push_back(sprite10);
+  spritesVector3.push_back(sprite11);
+  spritesVector3.push_back(sprite12);
 
 
 
@@ -96,15 +96,18 @@ int main() {
 
   running = window.initalize();
 
-  BaseModel object1 = {vertexShaderPath, fragmentShaderPath, wallTexturePath1,
+  PlayerModel object1 = {vertexShaderPath, fragmentShaderPath, wallTexturePath1,
                        spritesVector, indecies};
 
-  BaseModel object2 = {vertexShaderPath, fragmentShaderPath, wallTexturePath1,
+  EnemyModel object2 = {vertexShaderPath, fragmentShaderPath, wallTexturePath1,
                        spritesVector2, indecies2};
 
+  EnemyModel object3 = {vertexShaderPath, fragmentShaderPath, wallTexturePath1,
+                        spritesVector3, indecies2};
 
   object1.create_object();
   object2.create_object();
+  object3.create_object();
   // // Create players object
   // Players players(objects);
 
@@ -145,8 +148,6 @@ int main() {
         }
       }
 
-      
-      
     }
     // Render updates
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -155,7 +156,8 @@ int main() {
     // players.draw(angle, x, y, bounds);
     // enemiesObjects.draw();
     object1.draw_model(angle, x, y, bounds);
-    object2.draw_model(45, 0.0f, 0.0f, bounds);
+    object2.draw_model();
+    object3.draw_model();
     window.renderOpenGL();
   }
   // Destroy window

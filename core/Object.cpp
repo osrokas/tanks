@@ -70,18 +70,18 @@
 
 // // void Enemies::movement(){
 
-// //   if (state == 0 && startX < bounds.maxX) {
-// //     startX += speed;
-// //     angle = 90.0f;
-// //   } else if (state == 1 && startX > bounds.minX) {
-// //     startX -= speed;
-// //     angle = 270.0f;
-// //   } else if (state == 2 && startY < bounds.maxY) {
-// //     startY += speed;
-// //     angle = 180.0f;
-// //   } else if (state == 3 && startY > bounds.minY) {
-// //     startY -= speed;
-// //     angle = 0.0f;
-// //   } else {
-// //   };
+//   if (state == 0 && startX < bounds.maxX) {
+//     startX += speed;
+//     angle = 90.0f;
+//   } else if (state == 1 && startX > bounds.minX) {
+//     startX -= speed;
+//     angle = 270.0f;
+//   } else if (state == 2 && startY < bounds.maxY) {
+//     startY += speed;
+//     angle = 180.0f;
+//   } else if (state == 3 && startY > bounds.minY) {
+//     startY -= speed;
+//     angle = 0.0f;
+//   } else {
+//   };
 // // };

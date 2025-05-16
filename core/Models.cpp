@@ -28,12 +28,6 @@ void BaseModel::create_model(){
   texture.load_texture();
 };
 
-void BaseModel::draw_model(float angle, float x, float y, Extent bounds) {
-  texture.draw_texture();
-  shaderProgram->useShader();
-  buffering->drawShader();
-  tranformormation->move(angle, x, y, bounds);
-};
 
 void BaseModel::addVector(Sprite &spriteVector) {
   vertices.push_back(spriteVector.x_pos);
@@ -67,9 +61,69 @@ void BaseModel::set_positions(){
   tranformormation->move(angle, startX, startY, bounds);
 };
 
+void BaseModel::draw_model(){
+  std::cout << "DO NOTHING" << std::endl;
+}
+
 void BaseModel::create_object(){
   addVectors();
   createSprite();
   create_model();
   set_positions();
+};
+
+PlayerModel::PlayerModel(std::string vShaderPath, std::string fShaderPath,
+                         std::string tPath, std::vector<struct Sprite> &spritV,
+                         std::vector<unsigned int> &ind)
+  : BaseModel(vShaderPath, fShaderPath, tPath, spritV, ind) {}
+
+void PlayerModel::draw_model(){};
+
+void PlayerModel::draw_model(float angle, float x, float y, Extent bounds) {
+      texture.draw_texture();
+      shaderProgram->useShader();
+      buffering->drawShader();
+      tranformormation->move(angle, x, y, bounds);
+};
+
+EnemyModel::EnemyModel(std::string vShaderPath, std::string fShaderPath,
+                       std::string tPath, std::vector<struct Sprite> &spritV,
+                       std::vector<unsigned int> &ind)
+  : BaseModel(vShaderPath, fShaderPath, tPath, spritV, ind) {}
+
+void EnemyModel::draw_model() {
+  texture.draw_texture();
+  shaderProgram->useShader();
+  buffering->drawShader();
+  tranformormation->move(angle, startX, startY, bounds);
+  random_state();
+  movement();
+};
+
+void EnemyModel::random_state(){
+  if (dir_count > 20000) {
+    state = 0 + std::rand() % 4;
+    dir_count = 0;
+  }
+  else {
+    dir_count +=1;
+  }
+};
+
+void EnemyModel::movement(){
+
+  if (state == 0 && startX < bounds.maxX) {
+    startX += speed;
+    angle = 90.0f;
+  } else if (state == 1 && startX > bounds.minX) {
+    startX -= speed;
+    angle = 270.0f;
+  } else if (state == 2 && startY < bounds.maxY) {
+    startY += speed;
+    angle = 180.0f;
+  } else if (state == 3 && startY > bounds.minY) {
+    startY -= speed;
+    angle = 0.0f;
+  } else {
+  };
 };
