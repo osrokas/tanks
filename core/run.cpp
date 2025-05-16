@@ -1,6 +1,5 @@
+#include "Models.h"
 #include "Transformations.h"
-#include <iostream>
-#include <ostream>
 #include <vector>
 #define SDL_MAIN_HANDLED // For proper sdl initialization
 #include "KeyboardEvents.h"
@@ -18,13 +17,29 @@ int run(bool wireframe, std::vector<Object> objects, std::vector<Object> enemies
 
   running = window.initalize();
 
-  // Create players object
-  Players players(objects);
-  Players enmiesObjects(enemies);
+  Object playerObject = objects[0];
 
-  // Add data to object
-  players.add_data();
-  enmiesObjects.add_data();
+  PlayerModel playerObjectModel(
+      playerObject.vertexShaderPath, playerObject.fragmentShaderPath,
+      playerObject.wallTexturePath1, playerObject.spritesVector,
+      playerObject.indecies);
+
+  std::vector<EnemyModel> enemiesModel;
+
+  for (int i = 0; i < enemies.size(); i++){
+    EnemyModel object(enemies[i].vertexShaderPath,
+                      enemies[i].fragmentShaderPath,
+                      enemies[i].wallTexturePath1, enemies[i].spritesVector,
+                      enemies[i].indecies);
+
+    enemiesModel.push_back(object);
+  };
+
+  playerObjectModel.create_object();
+
+  for (int i = 0; i < enemiesModel.size(); i++) {
+    enemiesModel[i].create_object();
+  };
 
   // Set initial coordinates for player
   float angle = 0.0f;
@@ -42,7 +57,6 @@ int run(bool wireframe, std::vector<Object> objects, std::vector<Object> enemies
       // Player movement
       if (event.type == SDL_KEYDOWN) {
         keyboardMovement(event, &angle, &x, &y);
-        std::cout << angle << std::endl;
       }
       // Resizing window
       if (event.type == SDL_WINDOWEVENT) {
@@ -50,18 +64,18 @@ int run(bool wireframe, std::vector<Object> objects, std::vector<Object> enemies
           // Update OpenGL viewport
         }
       }
-    
+    }
     // Updating game view 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
     // Drawing objects on the screen
-    players.draw(angle, x, y, bounds);
-    enmiesObjects.draw(angle, 0.1f, 0.4f, bounds);
-    
+    playerObjectModel.draw_model(angle, x, y, bounds);
+    for (int i = 0; i < enemiesModel.size(); i++) {
+      enemiesModel[i].draw_model();
+    };
     // Render updates
     window.renderOpenGL();
-    }
   }
   // Destroy window
   window.destroyWindow();

@@ -1,5 +1,4 @@
 // For proper sdl initialization
-
 #include "SDL2/SDL_keycode.h"
 #include "Transformations.h"
 #include <vector>
@@ -15,9 +14,6 @@ int main() {
   const char *fragmentShaderPath("C:\\dev\\tanks\\shaders\\f_shader.vert");
   const char *wallTexturePath1 = "C:\\dev\\tanks\\asssets\\tank.JPG";
   const char *txt = "C:\\dev\\tanks\\asssets\\wall.jpg";
-
-  // std::vector<Object>objects;
-  // std::vector<Object>enemies;
 
   Sprite sprite1 = {-0.1, -0.3, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0};
   Sprite sprite2 = {0.1, -0.3, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0};
@@ -35,7 +31,6 @@ int main() {
   Sprite sprite12 = {-0.5, -0.4, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0};
 
   // Creating indecies for the sprites
-
   std::vector<unsigned int> indecies2;
   indecies2.push_back(0);
   indecies2.push_back(1);
@@ -49,7 +44,6 @@ int main() {
   spritesVector2.push_back(sprite6);
   spritesVector2.push_back(sprite7);
   spritesVector2.push_back(sprite8);
-
 
   std::vector<Sprite> spritesVector;
   spritesVector.push_back(sprite1);
@@ -72,21 +66,7 @@ int main() {
   spritesVector3.push_back(sprite11);
   spritesVector3.push_back(sprite12);
 
-
-
-
-  // // Creating object
-  // Object object2 = {vertexShaderPath, fragmentShaderPath,
-  // wallTexturePath1,
-  //                   spritesVector2, indecies2};
-
-  // // Creating object
-  // Object object3 = {vertexShaderPath, fragmentShaderPath, txt,
-  // spritesVector3,
-  //                   indecies2};
-
-  // enemies.push_back(object1);
-  // enemies.push_back(object3);
+  
 
   bool running; // Running state
   SDL_Event event; // initialize sdl events
@@ -106,21 +86,14 @@ int main() {
                         spritesVector3, indecies2};
 
   object1.create_object();
-  object2.create_object();
-  object3.create_object();
-  // // Create players object
-  // Players players(objects);
 
-  // // Enemies enemiesObjects(enemies);
-
-  // // Add data to object
-  // players.add_data();
-  // // enemiesObjects.add_data();
-
-  // // Set initial positions
-  // // TODO Create initial values as it defined in Sprite
-  // players.set_positions();
-  // enemiesObjects.set_positions();
+  std::vector<EnemyModel> enemies;
+  enemies.push_back(object2);
+  enemies.push_back(object3);
+  
+  for (int i = 0; i < enemies.size(); i++){
+    enemies[i].create_object();
+  }
 
   // Set initial coordinates for player
   float angle = 0.0f;
@@ -152,12 +125,13 @@ int main() {
     // Render updates
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
+
     // Draw objects
-    // players.draw(angle, x, y, bounds);
-    // enemiesObjects.draw();
     object1.draw_model(angle, x, y, bounds);
-    object2.draw_model();
-    object3.draw_model();
+    for (int i = 0; i < enemies.size(); i++) {
+      enemies[i].draw_model();
+    }
+
     window.renderOpenGL();
   }
   // Destroy window
