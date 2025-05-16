@@ -2,7 +2,7 @@
 #include "Buffer.h"
 #include "Geometry.h"
 #include "Shaders.h"
-// #include "Transformations.h"
+
 
 BaseModel::BaseModel(std::string vShaderPath, std::string fShaderPath,
                      std::string tPath, std::vector<struct Sprite> &spritV,
