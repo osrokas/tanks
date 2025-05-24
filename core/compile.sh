@@ -1,1 +1,3 @@
-g++  -IC:/CLibs/glad/include main.cpp KeyboardEvents.cpp window.h Window.cpp KeyboardEvents.h Shaders.h Shaders.cpp Models.h Models.cpp Sprites.h Geometry.h Texture.h Texture.cpp Buffer.h Buffer.cpp stb_image.h stb_image.cpp Object.h Object.cpp Transformations.h Transformations.cpp  C:/CLibs/glad/src/glad.c -IC:/dev/tanks -g -pedantic -o tanks -lSDL2 -lSDL2_image
+g++  -IC:/CLibs/glad/include -IC:/CLibs/SDL2-2.30.10/include -LC:/CLibs/SDL2-2.30.10/lib/x64 -IC:/CLibs/SDL2_image-2.8.2/include -LC:/CLibs/SDL2_image-2.8.2/lib/x64 main.cpp Collisions.cpp Collisions.h KeyboardEvents.cpp window.h Window.cpp KeyboardEvents.h Shaders.h Shaders.cpp Models.h Models.cpp Sprites.h Geometry.h Geometry.cpp Texture.h Texture.cpp Buffer.h Buffer.cpp stb_image.h stb_image.cpp Object.h Transformations.h Transformations.cpp  C:/CLibs/glad/src/glad.c -IC:/dev/tanks -g -pedantic -o tanks -lSDL2 -lSDL2_image
+
+

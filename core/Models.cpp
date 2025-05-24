@@ -4,15 +4,15 @@
 #include "Shaders.h"
 
 
-BaseModel::BaseModel(std::string vShaderPath, std::string fShaderPath,
-                     std::string tPath, std::vector<struct Sprite> &spritV,
+BaseModel::BaseModel(float w, float l, std::string vShaderPath, std::string fShaderPath,
+                     std::string tPath,
                      std::vector<unsigned int> &ind)
-    : vertexShaderPath(vShaderPath.c_str()),
+    : width(w), length(l), vertexShaderPath(vShaderPath.c_str()),
       fragmentShaderPath(fShaderPath.c_str()), texturePath(tPath.c_str()),
       vertexShader(vShaderPath.c_str()), fragmentShader(fShaderPath.c_str()),
-      spritesVector(spritV), indecies(ind),
+      indecies(ind),
       texture(tPath.c_str()), shaderProgram(nullptr), buffering(nullptr),
-      tranformormation(nullptr){};
+      tranformormation(nullptr), geometry2d(nullptr){};
 
 void BaseModel::create_model(){
   unsigned int vShader;
@@ -50,6 +50,7 @@ unsigned int BaseModel::getShaderProgram() {
 };
 
 void BaseModel::addVectors(){
+  spritesVector = geometry2d->create_sprite();
   for (int i = 0; i < spritesVector.size(); i++) {
     addVector(spritesVector[i]);
   }
@@ -58,24 +59,40 @@ void BaseModel::addVectors(){
 void BaseModel::set_positions(){
   unsigned int shader_id = shaderProgram->getShaderProgram();
   tranformormation = new Transformation(shader_id);
-  tranformormation->move(angle, startX, startY, bounds);
+  tranformormation->move(angle, init_x, init_y, bounds);
 };
 
 void BaseModel::draw_model(){
   std::cout << "DO NOTHING" << std::endl;
-}
+};
+
+void BaseModel::setCoords(float x, float y) {
+    init_x = x;
+    init_y = y;
+};
 
 void BaseModel::create_object(){
+  createGeometry();
   addVectors();
   createSprite();
   create_model();
   set_positions();
 };
 
-PlayerModel::PlayerModel(std::string vShaderPath, std::string fShaderPath,
-                         std::string tPath, std::vector<struct Sprite> &spritV,
+void BaseModel::createGeometry() {
+  geometry2d = new Geometry2D(width, length);
+}
+
+void BaseModel::setModelBoundry() {
+  topLeft = init_x - width;
+  topRight = init_x + width;
+  
+}
+
+PlayerModel::PlayerModel(float w, float l, std::string vShaderPath, std::string fShaderPath,
+                         std::string tPath,
                          std::vector<unsigned int> &ind)
-  : BaseModel(vShaderPath, fShaderPath, tPath, spritV, ind) {}
+  : BaseModel(w, l, vShaderPath, fShaderPath, tPath, ind) {}
 
 void PlayerModel::draw_model(){};
 
@@ -84,20 +101,22 @@ void PlayerModel::draw_model(float angle, float x, float y, Extent bounds) {
       shaderProgram->useShader();
       buffering->drawShader();
       tranformormation->move(angle, x, y, bounds);
+      init_x = x;
+      init_y = y;
 };
 
-EnemyModel::EnemyModel(std::string vShaderPath, std::string fShaderPath,
-                       std::string tPath, std::vector<struct Sprite> &spritV,
+EnemyModel::EnemyModel(float w, float l, std::string vShaderPath, std::string fShaderPath,
+                       std::string tPath, 
                        std::vector<unsigned int> &ind)
-  : BaseModel(vShaderPath, fShaderPath, tPath, spritV, ind) {}
+  : BaseModel(w, l, vShaderPath, fShaderPath, tPath, ind) {}
 
 void EnemyModel::draw_model() {
   texture.draw_texture();
   shaderProgram->useShader();
   buffering->drawShader();
-  tranformormation->move(angle, startX, startY, bounds);
-  random_state();
-  movement();
+  tranformormation->move(angle, init_x, init_y, bounds);
+  // random_state();
+  // movement();
 };
 
 void EnemyModel::random_state(){
@@ -112,17 +131,17 @@ void EnemyModel::random_state(){
 
 void EnemyModel::movement(){
 
-  if (state == 0 && startX < bounds.maxX) {
-    startX += speed;
+  if (state == 0 && init_x < bounds.maxX) {
+    init_x += speed;
     angle = 90.0f;
-  } else if (state == 1 && startX > bounds.minX) {
-    startX -= speed;
+  } else if (state == 1 && init_x > bounds.minX) {
+    init_x -= speed;
     angle = 270.0f;
-  } else if (state == 2 && startY < bounds.maxY) {
-    startY += speed;
+  } else if (state == 2 && init_y < bounds.maxY) {
+    init_y += speed;
     angle = 180.0f;
-  } else if (state == 3 && startY > bounds.minY) {
-    startY -= speed;
+  } else if (state == 3 && init_y > bounds.minY) {
+    init_y -= speed;
     angle = 0.0f;
   } else {
   };
