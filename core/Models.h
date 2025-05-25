@@ -24,10 +24,10 @@ public:
   float width;
   float length;
 
-  float topLeft;
-  float topRight;
-  float bottomRight;
-  float bottomLeft;
+  float right;
+  float left;
+  float top;
+  float bottom;
 
   BaseModel(float w, float l, std::string vShaderPath, std::string fShaderPath, std::string tPath, std::vector<unsigned int> &ind);
 
@@ -66,6 +66,7 @@ protected:
   void create_model();
   void createSprite();
   void set_positions();
+  void createBoundry();
  
 
   Extent bounds = {0.8f, 0.8f, -0.8f, -0.8f};

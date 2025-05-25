@@ -77,16 +77,18 @@ void BaseModel::create_object(){
   createSprite();
   create_model();
   set_positions();
+  createBoundry();
 };
 
 void BaseModel::createGeometry() {
   geometry2d = new Geometry2D(width, length);
-}
+};
 
-void BaseModel::setModelBoundry() {
-  topLeft = init_x - width;
-  topRight = init_x + width;
-  
+void BaseModel::createBoundry() {
+  top = init_y + width;
+  bottom = init_y - width;
+  right = init_x + length;
+  left = init_x - length;
 }
 
 PlayerModel::PlayerModel(float w, float l, std::string vShaderPath, std::string fShaderPath,
@@ -103,6 +105,10 @@ void PlayerModel::draw_model(float angle, float x, float y, Extent bounds) {
       tranformormation->move(angle, x, y, bounds);
       init_x = x;
       init_y = y;
+      right = init_x + length;
+      left = init_x - length;
+      top = init_y + width;
+      bottom = init_y - width;
 };
 
 EnemyModel::EnemyModel(float w, float l, std::string vShaderPath, std::string fShaderPath,
@@ -115,8 +121,8 @@ void EnemyModel::draw_model() {
   shaderProgram->useShader();
   buffering->drawShader();
   tranformormation->move(angle, init_x, init_y, bounds);
-  // random_state();
-  // movement();
+  random_state();
+  movement();
 };
 
 void EnemyModel::random_state(){
@@ -133,15 +139,23 @@ void EnemyModel::movement(){
 
   if (state == 0 && init_x < bounds.maxX) {
     init_x += speed;
+    right += speed;
+    left += speed;
     angle = 90.0f;
   } else if (state == 1 && init_x > bounds.minX) {
     init_x -= speed;
+    right -= speed;
+    left -= speed;
     angle = 270.0f;
   } else if (state == 2 && init_y < bounds.maxY) {
     init_y += speed;
+    top += speed;
+    bottom += speed;
     angle = 180.0f;
   } else if (state == 3 && init_y > bounds.minY) {
     init_y -= speed;
+    top -= speed;
+    bottom -= speed;
     angle = 0.0f;
   } else {
   };

@@ -96,8 +96,7 @@ int main() {
     for (int i = 0; i < enemies.size(); i++) {
       enemies[i].draw_model();
     }
-    cols.detect();
-
+    cols.detect_xy();
     window.renderOpenGL();
   }
   // Destroy window
