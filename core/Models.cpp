@@ -59,7 +59,7 @@ void BaseModel::addVectors(){
 void BaseModel::set_positions(){
   unsigned int shader_id = shaderProgram->getShaderProgram();
   tranformormation = new Transformation(shader_id);
-  tranformormation->move(angle, init_x, init_y, bounds);
+  tranformormation->move(angle, init_x, init_y);
 };
 
 void BaseModel::draw_model(){
@@ -98,11 +98,12 @@ PlayerModel::PlayerModel(float w, float l, std::string vShaderPath, std::string 
 
 void PlayerModel::draw_model(){};
 
-void PlayerModel::draw_model(float angle, float x, float y, Extent bounds) {
+void PlayerModel::draw_model(float angle, float x, float y) {
       texture.draw_texture();
       shaderProgram->useShader();
       buffering->drawShader();
-      tranformormation->move(angle, x, y, bounds);
+
+      tranformormation->move(angle, x, y);
       init_x = x;
       init_y = y;
       right = init_x + length;
@@ -116,13 +117,15 @@ EnemyModel::EnemyModel(float w, float l, std::string vShaderPath, std::string fS
                        std::vector<unsigned int> &ind)
   : BaseModel(w, l, vShaderPath, fShaderPath, tPath, ind) {}
 
-void EnemyModel::draw_model() {
+void EnemyModel::draw_model() {};
+
+void EnemyModel::draw_model(Extent bounds) {
   texture.draw_texture();
   shaderProgram->useShader();
   buffering->drawShader();
-  tranformormation->move(angle, init_x, init_y, bounds);
+  tranformormation->move(angle, init_x, init_y);
   random_state();
-  movement();
+  movement(bounds);
 };
 
 void EnemyModel::random_state(){
@@ -135,7 +138,7 @@ void EnemyModel::random_state(){
   }
 };
 
-void EnemyModel::movement(){
+void EnemyModel::movement(Extent bounds){
 
   if (state == 0 && init_x < bounds.maxX) {
     init_x += speed;

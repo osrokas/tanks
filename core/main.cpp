@@ -62,10 +62,20 @@ int main() {
   Extent bounds = {0.8f, 0.8f, -0.8f, -0.8f};
       // Game loop
 
-  EnemyModel &enem = enemies[1];
+  EnemyModel &enem1 = enemies[0];
+  EnemyModel &enem2 = enemies[1];
   PlayerModel &pl = object1;
 
-  Collision cols(pl, enem);
+  Collision cols1(pl, enem1);
+  Collision cols2(pl, enem2);
+  Collision cols3(enem1, enem2);
+
+  std::vector<Collision> cols;
+  cols.push_back(cols1);
+  cols.push_back(cols2);
+  cols.push_back(cols3);
+
+
   while (running) {
 
     // Handling inputs
@@ -76,8 +86,9 @@ int main() {
       }
       // Player movement
       if (event.type == SDL_KEYDOWN) {
-        keyboardMovement(event, &angle, &x, &y);
+        keyboardMovement(event, &angle, &x, &y, bounds);
       }
+      
       // Resizing window
       if (event.type == SDL_WINDOWEVENT) {
         if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
@@ -91,12 +102,19 @@ int main() {
     glClear(GL_COLOR_BUFFER_BIT);
 
     // Draw objects
-    object1.draw_model(angle, x, y, bounds);
+    object1.draw_model(angle, x, y);
 
     for (int i = 0; i < enemies.size(); i++) {
-      enemies[i].draw_model();
-    }
-    cols.detect_xy();
+      enemies[i].draw_model(bounds);
+    };
+    
+    for (int i =0; i < cols.size(); i++) {
+      cols[i].detect_xy();
+      cols[i].detect_side();
+    };
+    std::cout << std::boolalpha  << cols[0].collision1.top << std::endl;
+    // std::cout << std::boolalpha  << cols[0].xy_detection << std::endl;
+ 
     window.renderOpenGL();
   }
   // Destroy window

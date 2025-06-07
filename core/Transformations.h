@@ -18,7 +18,7 @@ class Transformation {
   public:
     unsigned int shaderProgramID;
     Transformation(unsigned int shaderID);
-    void move(float angle, float x, float y, Extent extent);
+    void move(float angle, float x, float y);
 
   private:
     unsigned int transformLoc;

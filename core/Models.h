@@ -81,7 +81,7 @@ class PlayerModel : public BaseModel {
 
     using BaseModel::draw_model;
     void draw_model() override;
-    void draw_model(float angle, float startX, float startY, Extent bounds);
+    void draw_model(float angle, float startX, float startY);
 };
 
 class EnemyModel : public BaseModel {
@@ -89,14 +89,15 @@ class EnemyModel : public BaseModel {
     EnemyModel(float w, float h, std::string vShaderPath, std::string fShaderPath,
                 std::string tPath,
                 std::vector<unsigned int> &ind);
-
+    using BaseModel::draw_model;
     void draw_model() override;
+    void draw_model(Extent bounds);
     float get_position();
 
   protected:
       int state = 0;
       int dir_count = 0;
       float speed = 0.00004f;
-      void movement();
+      void movement(Extent bounds);
       void random_state();
 };
