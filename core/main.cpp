@@ -112,8 +112,6 @@ int main() {
       cols[i].detect_xy();
       cols[i].detect_side();
     };
-    std::cout << std::boolalpha  << cols[0].collision1.top << std::endl;
-    // std::cout << std::boolalpha  << cols[0].xy_detection << std::endl;
  
     window.renderOpenGL();
   }
