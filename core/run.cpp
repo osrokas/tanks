@@ -20,16 +20,18 @@ int run(bool wireframe, std::vector<Object> objects, std::vector<Object> enemies
   Object playerObject = objects[0];
 
   PlayerModel playerObjectModel(
+      playerObject.width, playerObject.length,
       playerObject.vertexShaderPath, playerObject.fragmentShaderPath,
-      playerObject.wallTexturePath1, playerObject.spritesVector,
+      playerObject.wallTexturePath1,
       playerObject.indecies);
 
   std::vector<EnemyModel> enemiesModel;
 
   for (int i = 0; i < enemies.size(); i++){
-    EnemyModel object(enemies[i].vertexShaderPath,
+    EnemyModel object(enemies[i].width, enemies[i].length,
+                      enemies[i].vertexShaderPath,
                       enemies[i].fragmentShaderPath,
-                      enemies[i].wallTexturePath1, enemies[i].spritesVector,
+                      enemies[i].wallTexturePath1,
                       enemies[i].indecies);
 
     enemiesModel.push_back(object);
@@ -56,7 +58,7 @@ int run(bool wireframe, std::vector<Object> objects, std::vector<Object> enemies
       }
       // Player movement
       if (event.type == SDL_KEYDOWN) {
-        keyboardMovement(event, &angle, &x, &y);
+        keyboardMovement(event, &angle, &x, &y, bounds);
       }
       // Resizing window
       if (event.type == SDL_WINDOWEVENT) {
@@ -70,7 +72,7 @@ int run(bool wireframe, std::vector<Object> objects, std::vector<Object> enemies
     glClear(GL_COLOR_BUFFER_BIT);
 
     // Drawing objects on the screen
-    playerObjectModel.draw_model(angle, x, y, bounds);
+    playerObjectModel.draw_model(angle, x, y);
     for (int i = 0; i < enemiesModel.size(); i++) {
       enemiesModel[i].draw_model();
     };

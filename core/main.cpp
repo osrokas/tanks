@@ -13,10 +13,10 @@
 #include "Collisions.h"
 
 int main() {
-  const char *vertexShaderPath("C:\\Projects\\tanks\\shaders\\v_rotate_shader.vert");
-  const char *fragmentShaderPath("C:\\Projects\\tanks\\shaders\\f_shader.vert");
-  const char *wallTexturePath1 = "C:\\Projects\\tanks\\asssets\\tank.JPG";
-  const char *txt = "C:\\Projects\\tanks\\asssets\\wall.jpg";
+  const char *vertexShaderPath("/home/osrokas/projects/tanks/shaders/v_rotate_shader.vert");
+  const char *fragmentShaderPath("/home/osrokas/projects/tanks/shaders/f_shader.vert");
+  const char *wallTexturePath1 = "/home/osrokas/projects/tanks/asssets/tank.JPG";
+  const char *txt = "/home/osrokas/projects/tanks/asssets/wall.jpg";
 
   // Creating indecies for the sprites
   std::vector<unsigned int> indecies;

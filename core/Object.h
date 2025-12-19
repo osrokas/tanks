@@ -6,9 +6,10 @@
 
 
 struct Object {
+  float width;
+  float length;
   std::string vertexShaderPath;
   std::string fragmentShaderPath;
   std::string wallTexturePath1;
-  std::vector<Sprite> spritesVector;
   std::vector<unsigned int> indecies;
 };
