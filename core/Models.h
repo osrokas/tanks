@@ -24,10 +24,10 @@ public:
   float width;
   float length;
 
-  float right;
-  float left;
-  float top;
-  float bottom;
+  float right_i;
+  float left_i;
+  float top_i;
+  float bottom_i;
 
   BaseModel(float w, float l, std::string vShaderPath, std::string fShaderPath, std::string tPath, std::vector<unsigned int> &ind);
 
@@ -35,12 +35,12 @@ public:
   void create_object();
   unsigned int getShaderProgram();
 
-  // Coords getPosition();
   float angle = 0.0f;
   float init_x = 0.0f;
   float init_y = 0.0f;
   void setCoords(float x, float y);
   void setModelBoundry();
+  void transform_boundry(float angle);
 
 private:
   Shader vertexShader;

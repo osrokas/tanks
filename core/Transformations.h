@@ -19,7 +19,10 @@ class Transformation {
     unsigned int shaderProgramID;
     Transformation(unsigned int shaderID);
     void move(float angle, float x, float y);
+    glm::vec3 getTransformedCoordinates(float angle, float x, float y, float px, float py);
 
   private:
     unsigned int transformLoc;
   };
+
+glm::vec3 getTransformedCoordinates(float angle, float x, float y, float px, float py);

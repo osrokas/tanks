@@ -12,6 +12,8 @@
 #include "Geometry.h"
 #include "Collisions.h"
 
+
+
 int main() {
   const char *vertexShaderPath("/home/osrokas/projects/tanks/shaders/v_rotate_shader.vert");
   const char *fragmentShaderPath("/home/osrokas/projects/tanks/shaders/f_shader.vert");
@@ -33,7 +35,7 @@ int main() {
   // Creating window
   SDL window("Tanks", 600, 600);
 
-  running = window.initalize();
+  running = window.initialize();
 
   PlayerModel object1 = {0.1f, 0.2f, vertexShaderPath, fragmentShaderPath, wallTexturePath1,
                         indecies};
@@ -44,38 +46,51 @@ int main() {
   EnemyModel object3 = {0.1f, 0.2f, vertexShaderPath, fragmentShaderPath, wallTexturePath1,
                         indecies};
 
+  // Create player object
   object1.create_object();
 
+  // Creating enemy objects vector
   std::vector<EnemyModel> enemies;
   enemies.push_back(object2);
-  enemies.push_back(object3);
-  
+  // enemies.push_back(object3);
+    
+  // Create enemy objects and set initial coordinates
   for (int i = 0; i < enemies.size(); i++){
     enemies[i].create_object();
+    float initial_x (rand()/ (RAND_MAX/(0.8f - 0.1f)));
+    float initial_y (rand()/ (RAND_MAX/(0.8f - 0.1f)));
+    std::cout << "Initial X: " << initial_x << " Initial Y: " << initial_y << std::endl;
+    enemies[i].setCoords(initial_x, initial_y);
   }
 
   // Set initial coordinates for player
   float angle = 0.0f;
   float x = 0.0f;
   float y = 0.0f;
-  
+
+  // Define movement bounds
   Extent bounds = {0.8f, 0.8f, -0.8f, -0.8f};
-      // Game loop
 
-  EnemyModel &enem1 = enemies[0];
-  EnemyModel &enem2 = enemies[1];
-  PlayerModel &pl = object1;
+  // References to models for collision detection
+  // EnemyModel &enem1 = enemies[0];
+  // EnemyModel &enem2 = enemies[1];
+  // PlayerModel &pl = object1;
 
-  Collision cols1(pl, enem1);
-  Collision cols2(pl, enem2);
-  Collision cols3(enem1, enem2);
+  // // Creating collision objects
+  // Collision cols1(object1, enem1);
+  // Collision cols2(pl, enem2);
+  // Collision cols3(enem1, enem2);
 
-  std::vector<Collision> cols;
-  cols.push_back(cols1);
-  cols.push_back(cols2);
-  cols.push_back(cols3);
+  // Storing collisions in a vector
+  // std::vector<Collision> cols;
+  // cols.push_back(cols1);
+  // cols.push_back(cols2);
+  // cols.push_back(cols3);
 
+  // Defining collision detected flag
+  bool collisionDetected = false;
 
+  // Game loop
   while (running) {
 
     // Handling inputs
@@ -95,7 +110,6 @@ int main() {
           // Update OpenGL viewport
         }
       }
-
     }
     // Render updates
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -108,13 +122,22 @@ int main() {
       enemies[i].draw_model(bounds);
     };
     
-    for (int i =0; i < cols.size(); i++) {
-      cols[i].detect_xy();
-      cols[i].detect_side();
-    };
- 
+    // // Collision detection
+    // for (int i =0; i < cols.size(); i++) {
+    //   collisionDetected = cols[i].nearObject(0.3f);
+    //   if (collisionDetected) {
+    //     std::cout << "Collision detected between objects!" << std::endl;
+    //   }
+    //   else {
+    //     std::cout << "No collision." << std::endl;
+    //   }
+    // };
+    // std::cout << "------------------------" << std::endl;
+
+    // Update window
     window.renderOpenGL();
   }
+
   // Destroy window
   window.destroyWindow();
   return 0;

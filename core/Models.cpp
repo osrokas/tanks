@@ -71,6 +71,7 @@ void BaseModel::setCoords(float x, float y) {
     init_y = y;
 };
 
+
 void BaseModel::create_object(){
   createGeometry();
   addVectors();
@@ -85,11 +86,21 @@ void BaseModel::createGeometry() {
 };
 
 void BaseModel::createBoundry() {
-  top = init_y + width;
-  bottom = init_y - width;
-  right = init_x + length;
-  left = init_x - length;
+    left_i = init_x + width;
+    right_i = init_x - width;
+    top_i = init_y - length;
+    bottom_i = init_y + length;
 }
+
+void BaseModel::transform_boundry(float angle) {
+    glm::vec3 transformedCoords = getTransformedCoordinates(angle, 0, 0, right_i, top_i);
+    float right = transformedCoords.x + init_x;
+    float top = transformedCoords.y + init_y;
+
+    transformedCoords = getTransformedCoordinates(angle, 0, 0, left_i, bottom_i);
+    float left = transformedCoords.x + init_x;
+    float bottom = transformedCoords.y + init_y;
+};
 
 PlayerModel::PlayerModel(float w, float l, std::string vShaderPath, std::string fShaderPath,
                          std::string tPath,
@@ -102,15 +113,13 @@ void PlayerModel::draw_model(float angle, float x, float y) {
       texture.draw_texture();
       shaderProgram->useShader();
       buffering->drawShader();
-
       tranformormation->move(angle, x, y);
       init_x = x;
       init_y = y;
-      right = init_x + length;
-      left = init_x - length;
-      top = init_y + width;
-      bottom = init_y - width;
+      transform_boundry(angle);
 };
+
+
 
 EnemyModel::EnemyModel(float w, float l, std::string vShaderPath, std::string fShaderPath,
                        std::string tPath, 
@@ -126,6 +135,7 @@ void EnemyModel::draw_model(Extent bounds) {
   tranformormation->move(angle, init_x, init_y);
   random_state();
   movement(bounds);
+  transform_boundry(angle);
 };
 
 void EnemyModel::random_state(){
@@ -142,23 +152,15 @@ void EnemyModel::movement(Extent bounds){
 
   if (state == 0 && init_x < bounds.maxX) {
     init_x += speed;
-    right += speed;
-    left += speed;
     angle = 90.0f;
   } else if (state == 1 && init_x > bounds.minX) {
     init_x -= speed;
-    right -= speed;
-    left -= speed;
     angle = 270.0f;
   } else if (state == 2 && init_y < bounds.maxY) {
     init_y += speed;
-    top += speed;
-    bottom += speed;
     angle = 180.0f;
   } else if (state == 3 && init_y > bounds.minY) {
     init_y -= speed;
-    top -= speed;
-    bottom -= speed;
     angle = 0.0f;
   } else {
   };

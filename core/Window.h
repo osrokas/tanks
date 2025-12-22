@@ -16,7 +16,7 @@ class SDL {
       const char *sdl_tile; 
       bool running = true;
       SDL(const char *title, int width, int height);
-      bool initalize();
+      bool initialize();
       void createWindow();
       void createRenderer();
       void createOpenGLContext();

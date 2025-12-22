@@ -12,7 +12,7 @@ SDL::SDL(const char *title, int width, int height)
     opengl_context(NULL)
   {}
 
-bool SDL::initalize() {
+bool SDL::initialize() {
   SDL::setAttributes();
   SDL::createWindow();
   SDL::createRenderer();
