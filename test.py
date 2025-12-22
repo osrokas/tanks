@@ -26,6 +26,7 @@ vertex_shader_path = os.path.join("shaders", "v_rotate_shader.vert")
 fragment_shader_path = os.path.join("shaders", "f_shader.vert")
 texture_path = os.path.join("asssets", "tank.JPG")
 
+wall_texture_path = os.path.join("asssets", "tank.jpg")
 
 tank_object = sdltest.Object(
     0.1,
@@ -41,7 +42,7 @@ tank_object2 = sdltest.Object(
     0.2,
     vertex_shader_path,
     fragment_shader_path,
-    texture_path,
+    wall_texture_path,
     indecies,
 )
 
@@ -50,7 +51,7 @@ tank_object3 = sdltest.Object(
     0.2,
     vertex_shader_path,
     fragment_shader_path,
-    texture_path,
+    wall_texture_path,
     indecies,
 )
 
