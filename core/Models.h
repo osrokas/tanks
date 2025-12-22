@@ -101,3 +101,12 @@ class EnemyModel : public BaseModel {
       void movement(Extent bounds);
       void random_state();
 };
+
+class StaticModel : public BaseModel {
+  public:
+    StaticModel(float w, float h, std::string vShaderPath, std::string fShaderPath,
+                std::string tPath,
+                std::vector<unsigned int> &ind);
+    using BaseModel::draw_model;
+    void draw_model() override;
+};

@@ -165,3 +165,16 @@ void EnemyModel::movement(Extent bounds){
   } else {
   };
 };
+
+
+StaticModel::StaticModel(float w, float h, std::string vShaderPath, std::string fShaderPath,
+                           std::string tPath,
+                           std::vector<unsigned int> &ind)
+    : BaseModel(w, h, vShaderPath, fShaderPath, tPath, ind) {}
+
+void StaticModel::draw_model() {
+    texture.draw_texture();
+    shaderProgram->useShader();
+    buffering->drawShader();
+    tranformormation->move(0, init_x, init_y);
+};

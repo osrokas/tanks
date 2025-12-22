@@ -18,7 +18,6 @@ unsigned int Shader::compileShader(GLenum type) {
     std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n"
               << infoLog << std::endl;
   }
-
   return shader;
 }
 
@@ -38,9 +37,6 @@ void ShaderProgram::create(){
     glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
     std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n"
               << infoLog << std::endl;
-  }
-  else {
-    std::cout << "Shader program created successfully" << std::endl;
   }
   glDeleteShader(vertexShader);
   glDeleteShader(fragmentShader);

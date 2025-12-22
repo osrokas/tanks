@@ -35,7 +35,6 @@ class Shader{
 
 
 class ShaderProgram{
-  
   public:
     unsigned int vertexShader;
     unsigned int fragmentShader;

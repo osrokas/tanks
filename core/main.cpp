@@ -37,23 +37,31 @@ int main() {
 
   running = window.initialize();
 
-  PlayerModel object1 = {0.1f, 0.2f, vertexShaderPath, fragmentShaderPath, wallTexturePath1,
+  PlayerModel object1 = {0.05f, 0.1f, vertexShaderPath, fragmentShaderPath, wallTexturePath1,
                         indecies};
 
-  EnemyModel object2 = {0.1f, 0.2f, vertexShaderPath, fragmentShaderPath, wallTexturePath1,
-                        indecies};
-
-  EnemyModel object3 = {0.1f, 0.2f, vertexShaderPath, fragmentShaderPath, wallTexturePath1,
-                        indecies};
+  // Set initial coordinates for player
+  float angle = 0.0f;
+  float x = 0.0f;
+  float y = 0.0f;
 
   // Create player object
   object1.create_object();
+
+  EnemyModel object2 = {0.05f, 0.1f, vertexShaderPath, fragmentShaderPath, wallTexturePath1,
+                        indecies};
+
+  EnemyModel object3 = {0.05f, 0.1f, vertexShaderPath, fragmentShaderPath, wallTexturePath1,
+                        indecies};
 
   // Creating enemy objects vector
   std::vector<EnemyModel> enemies;
   enemies.push_back(object2);
   enemies.push_back(object3);
-    
+
+  // Define movement bounds
+  Extent bounds = {0.8f, 0.8f, -0.8f, -0.8f};
+
   // Create enemy objects and set initial coordinates
   for (int i = 0; i < enemies.size(); i++){
     enemies[i].create_object();
@@ -62,13 +70,28 @@ int main() {
     enemies[i].setCoords(initial_x, initial_y);
   }
 
-  // Set initial coordinates for player
-  float angle = 0.0f;
-  float x = 0.0f;
-  float y = 0.0f;
 
-  // Define movement bounds
-  Extent bounds = {0.8f, 0.8f, -0.8f, -0.8f};
+  StaticModel wall1 = {0.05f, 0.05f, vertexShaderPath, fragmentShaderPath, txt,
+                        indecies};
+
+  
+  StaticModel wall2 = {0.05f, 0.05f, vertexShaderPath, fragmentShaderPath, txt,
+                        indecies};
+
+
+
+  std::vector<StaticModel> walls;
+  walls.push_back(wall1);
+  walls.push_back(wall2);
+
+  for (int i = 0; i < walls.size(); i++){
+    walls[i].create_object();
+    if (i == 0)
+      walls[i].setCoords(0.5f, 0.0f);
+    else if (i ==1)
+    walls[i].setCoords(0.0f, 0.0f);
+  }
+  
 
   // References to models for collision detection
   // EnemyModel &enem1 = enemies[0];
@@ -119,6 +142,10 @@ int main() {
 
     for (int i = 0; i < enemies.size(); i++) {
       enemies[i].draw_model(bounds);
+    };
+
+    for (int i = 0; i < walls.size(); i++) {
+      walls[i].draw_model();
     };
     
     // // Collision detection
