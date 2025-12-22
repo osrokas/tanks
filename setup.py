@@ -52,14 +52,12 @@ ext_modules = [
             os.path.join("core", "Geometry.cpp"),
             os.path.join("glad", "src", "glad.c"),
             os.path.join("core", "Transformations.cpp"),
+            os.path.join("core", "Collisions.cpp"),
         ],  # source file
         include_dirs=[
             os.path.join("glad", "include"),
+            os.path.join("core"),
         ],
-        # library_dirs=[
-        #     r"C:/dev/SDL2 VC/SDL2/lib/x64",
-        #     r"C:/CLibs/SDL2_image-2.8.2/lib/x64",
-        # ],
         extra_compile_args=extra_compile_args,
         extra_link_args=extra_link_args,
         libraries=["SDL2", "SDL2_image", "GL"],
@@ -73,20 +71,8 @@ ext_modules = [
 # Set up the package
 setup(
     name="sdltest",
-    # headers=[
-    #     "core/Window.h",
-    #     "core/KeyboardEvents.h",
-    #     "core/Geometry.h",
-    #     "core/Shaders.h",
-    #     "core/Sprites.h",
-    #     "core/stb_image.h",
-    #     "core/Buffer.h",
-    #     "core/Models.h",
-    #     "core/Texture.h",
-    #     "core/Object.h",
-    #     "core/Transformations.h",
-    # ],
     version="0.2",
     ext_modules=ext_modules,
     cmdclass={"build_ext": build_ext},
+    zip_safe=False,
 )

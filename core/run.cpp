@@ -5,7 +5,12 @@
 #include "KeyboardEvents.h"
 #include "Object.h"
 #include "Window.h"
-
+#include "SDL2/SDL_keycode.h"
+#include <iostream>
+#include "Sprites.h"
+#include "glad/glad.h"
+#include "Geometry.h"
+#include "Collisions.h"
 
 int run(bool wireframe, std::vector<Object> objects, std::vector<Object> enemies) {
 
@@ -67,14 +72,18 @@ int run(bool wireframe, std::vector<Object> objects, std::vector<Object> enemies
         }
       }
     }
+    
     // Updating game view 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    // Drawing objects on the screen
+    // Drawing player on the screen
     playerObjectModel.draw_model(angle, x, y);
+
+    // Drawing enemies
     for (int i = 0; i < enemiesModel.size(); i++) {
-      enemiesModel[i].draw_model();
+      enemiesModel[i].draw_model(bounds);
+      
     };
     // Render updates
     window.renderOpenGL();

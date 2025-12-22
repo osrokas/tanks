@@ -28,8 +28,8 @@ texture_path = os.path.join("asssets", "tank.JPG")
 
 
 tank_object = sdltest.Object(
+    0.1,
     0.2,
-    0.3,
     vertex_shader_path,
     fragment_shader_path,
     texture_path,
@@ -37,28 +37,28 @@ tank_object = sdltest.Object(
 )
 
 tank_object2 = sdltest.Object(
+    0.1,
     0.2,
-    0.3,
     vertex_shader_path,
     fragment_shader_path,
     texture_path,
     indecies,
 )
 
-# tank_object3 = sdltest.Object(
-#     0.2,
-#     0.3,
-#     vertex_shader_path2,
-#     fragment_shader_path,
-#     texture_path,
-#     indecies2,
-# )
+tank_object3 = sdltest.Object(
+    0.1,
+    0.2,
+    vertex_shader_path,
+    fragment_shader_path,
+    texture_path,
+    indecies,
+)
 
 
 tanks = [
     tank_object]
 
-enemies = [tank_object2]
+enemies = [tank_object2, tank_object3]
 
 
 sdltest.run(False, tanks, enemies)

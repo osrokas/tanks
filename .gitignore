@@ -8,3 +8,4 @@ csrc
 dll
 *.pyd
 sdltest.cp312-win_amd64.pyd
+*gnu.so
