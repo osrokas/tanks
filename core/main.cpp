@@ -52,14 +52,13 @@ int main() {
   // Creating enemy objects vector
   std::vector<EnemyModel> enemies;
   enemies.push_back(object2);
-  // enemies.push_back(object3);
+  enemies.push_back(object3);
     
   // Create enemy objects and set initial coordinates
   for (int i = 0; i < enemies.size(); i++){
     enemies[i].create_object();
     float initial_x (rand()/ (RAND_MAX/(0.8f - 0.1f)));
     float initial_y (rand()/ (RAND_MAX/(0.8f - 0.1f)));
-    std::cout << "Initial X: " << initial_x << " Initial Y: " << initial_y << std::endl;
     enemies[i].setCoords(initial_x, initial_y);
   }
 
